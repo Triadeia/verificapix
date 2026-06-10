@@ -1,360 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Verifica PIX — Brandbook & Design System. Sistema completo de design para validação inteligente de comprovantes Pix.">
-  <title>Verifica PIX — Brandbook & Design System</title>
-  <link rel="stylesheet" href="assets/css/verificapix-tokens.css">
-  <style>
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-    .navbar {
-      background: var(--vp-navy);
-      padding: var(--space-6) var(--space-8);
-      display: flex;
-      align-items: center;
-      gap: var(--space-12);
-      border-bottom: 1px solid rgba(71, 165, 88, 0.2);
-      flex-wrap: wrap;
-    }
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      text-decoration: none;
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      font-weight: var(--weight-bold);
-      color: white;
-    }
-    .navbar-brand span {
-      color: var(--vp-green);
-    }
-    .navbar-symbol {
-      font-size: 28px;
-      display: flex;
-      align-items: center;
-    }
-    .navbar-nav {
-      display: flex;
-      gap: var(--space-6);
-      margin-left: auto;
-      flex-wrap: wrap;
-    }
-    .navbar-link {
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      font-size: var(--text-sm);
-      transition: color var(--transition-fast);
-    }
-    .navbar-link:hover {
-      color: var(--vp-green);
-    }
-    .content {
-      flex: 1;
-      padding: var(--space-12) var(--space-8);
-      background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .hero {
-      text-align: center;
-      margin-bottom: var(--space-16);
-    }
-    .hero h1 {
-      font-size: var(--text-6xl);
-      font-weight: var(--weight-bold);
-      color: var(--vp-navy);
-      margin-bottom: var(--space-4);
-      line-height: 1.1;
-    }
-    .hero p {
-      font-size: var(--text-xl);
-      color: var(--vp-text-secondary);
-      max-width: 600px;
-      margin: 0 auto var(--space-8);
-    }
-    .cta-buttons {
-      display: flex;
-      gap: var(--space-4);
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: var(--space-12);
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: var(--space-3) var(--space-6);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      font-weight: var(--weight-semibold);
-      font-size: var(--text-base);
-      transition: all var(--transition-fast);
-      border: none;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--vp-green);
-      color: white;
-    }
-    .btn-primary:hover {
-      background: #3e9f6a;
-      transform: translateY(-2px);
-    }
-    .btn-secondary {
-      background: white;
-      color: var(--vp-navy);
-      border: 2px solid var(--vp-navy);
-    }
-    .btn-secondary:hover {
-      background: var(--vp-navy);
-      color: white;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-8);
-      margin-bottom: var(--space-12);
-    }
-    .card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: var(--space-8);
-      border: 1px solid var(--vp-border-light);
-      transition: all var(--transition-fast);
-    }
-    .card:hover {
-      box-shadow: 0 8px 32px rgba(71, 165, 88, 0.1);
-      transform: translateY(-4px);
-    }
-    .card-icon {
-      font-size: 48px;
-      margin-bottom: var(--space-4);
-    }
-    .card-title {
-      font-size: var(--text-xl);
-      font-weight: var(--weight-bold);
-      color: var(--vp-navy);
-      margin-bottom: var(--space-3);
-    }
-    .card-desc {
-      font-size: var(--text-sm);
-      color: var(--vp-text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: var(--space-4);
-    }
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      color: var(--vp-green);
-      text-decoration: none;
-      font-weight: var(--weight-semibold);
-      font-size: var(--text-sm);
-    }
-    .card-link:hover {
-      gap: var(--space-3);
-    }
-    .section-title {
-      font-size: var(--text-3xl);
-      font-weight: var(--weight-bold);
-      color: var(--vp-navy);
-      margin-bottom: var(--space-8);
-      text-align: center;
-    }
-    .footer {
-      background: var(--vp-navy);
-      color: white;
-      padding: var(--space-8);
-      text-align: center;
-      font-size: var(--text-sm);
-      border-top: 1px solid rgba(71, 165, 88, 0.2);
-    }
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: var(--space-4);
-      }
-      .navbar-nav {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
-      }
-      .hero h1 {
-        font-size: var(--text-4xl);
-      }
-      .cta-buttons {
-        flex-direction: column;
-      }
-      .btn {
-        width: 100%;
-      }
-    }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Brandbook e Design System do Verifica Pix. Marca, produto, componentes e padrões para decisões mais seguras antes da entrega.">
+  <title>Verifica Pix | Brandbook &amp; Design System</title>
+  <link rel="icon" href="assets/logo/verificapix-symbol.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/brandbook-pages.css">
 </head>
-<body>
-  <nav class="navbar">
-    <a href="#" class="navbar-brand">
-      <span class="navbar-symbol">✓</span>
-      <div>Verifica<span>PIX</span></div>
+<body class="home-body">
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="menu-toggle" href="#sistema" aria-label="Explorar o brandbook"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a>
+    <a class="brand-link" href="" aria-label="Verifica Pix, página inicial">
+      <img src="assets/logo/verificapix-francy.png" alt="Verifica Pix">
     </a>
-    <div class="navbar-nav">
-      <a href="brand-strategy/" class="navbar-link">Estratégia</a>
-      <a href="voice/" class="navbar-link">Voz</a>
-      <a href="logo-usage/" class="navbar-link">Marca</a>
-      <a href="#documentacao" class="navbar-link">Documentação</a>
-      <a href="#design-system" class="navbar-link">Design System</a>
+    <span class="header-divider" aria-hidden="true"></span>
+    <span class="header-label">Brandbook &amp; Design System</span>
+    <div class="header-actions">
+      <a class="top-link" href="guidelines/">Marca</a>
+      <a class="top-link" href="tables/">Produto</a>
+      <a class="button button-primary" href="logo-usage/">Baixar logos <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
     </div>
-  </nav>
-
-  <div class="content">
-    <div class="container">
-      <!-- HERO -->
-      <div class="hero">
-        <h1>Verifica PIX</h1>
-        <p>Brandbook e Design System para a camada inteligente de análise que ajuda comerciantes a decidir antes de liberar o produto.</p>
-        <div class="cta-buttons">
-          <a href="guidelines/" class="btn btn-primary">Ver Guidelines</a>
-          <a href="#documentacao" class="btn btn-secondary">Explorar Design System</a>
-        </div>
+  </header>
+  <main class="home-main" id="conteudo">
+    <section class="home-hero">
+      <div class="hero-grid">
+        <div class="hero-copy reveal"><span class="eyebrow">Brandbook digital 2.0</span><h1>Veja antes de <span>liberar.</span></h1><p>Um sistema de marca e produto para transformar comprovantes Pix em decisões operacionais mais claras.</p><div class="hero-actions"><a class="button button-primary" href="guidelines/">Explorar o brandbook <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a><a class="button button-secondary" href="tables/">Ver a interface</a></div><p class="hero-note">Análise de evidências. Confirmação final sempre na conta recebedora.</p></div>
+        <div class="hero-product reveal">
+<div class="product-window" aria-label="Exemplo da interface de análise Verifica Pix">
+  <div class="product-bar"><i class="window-dot"></i><i class="window-dot"></i><i class="window-dot"></i><span>Análise VP-48291</span></div>
+  <div class="analysis-layout">
+    <aside class="analysis-nav"><strong>Verifica Pix</strong><ul><li class="active">Análises</li><li>Comprovantes</li><li>Equipe</li><li>Regras</li></ul></aside>
+    <div class="analysis-content">
+      <div class="analysis-head"><div><h3>Comprovante recebido</h3><p>Hoje, 14:32 · Caixa 02</p></div><span class="status status-attention">Atenção</span></div>
+      <div class="evidence-list">
+        <div class="evidence-row"><span class="evidence-label">Valor informado</span><span class="evidence-value">R$ 1.249,90</span><span class="status status-low">Compatível</span></div>
+        <div class="evidence-row"><span class="evidence-label">Beneficiário</span><span class="evidence-value">Loja Exemplo Ltda.</span><span class="status status-low">Compatível</span></div>
+        <div class="evidence-row"><span class="evidence-label">Identificador</span><span class="evidence-value">E18236120...</span><span class="status status-attention">Revisar</span></div>
+        <div class="evidence-row"><span class="evidence-label">Próxima ação</span><span class="evidence-value">Confirmar no banco recebedor</span><span class="status status-neutral">Manual</span></div>
       </div>
-
-      <!-- DOCUMENTAÇÃO -->
-      <section id="documentacao">
-        <h2 class="section-title">Brandbook completo em HTML</h2>
-        <div class="grid">
-          <div class="card">
-            <div class="card-icon">🎨</div>
-            <div class="card-title">Color Tokens</div>
-            <div class="card-desc">Palette completa com validação WCAG 2.1 AA. Cores primárias, semânticas, neutras e backgrounds.</div>
-            <a href="color-tokens/" class="card-link">Explorar →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🔤</div>
-            <div class="card-title">Typography</div>
-            <div class="card-desc">Escala de tipos, pesos, tamanhos e altura de linha. Francy para display, Roboto Mono para código.</div>
-            <a href="typography/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">📏</div>
-            <div class="card-title">Spacing & Layout</div>
-            <div class="card-desc">Grid system, escala de espaçamento, 5 breakpoints responsivos e container sizes.</div>
-            <a href="spacing-layout/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🎬</div>
-            <div class="card-title">Motion & Animation</div>
-            <div class="card-desc">Princípios de movimento, timing values, easing functions e padrões de animação.</div>
-            <a href="movimento/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🎴</div>
-            <div class="card-title">Components & Tables</div>
-            <div class="card-desc">Badges, botões, inputs, cards, alertas e componentes reutilizáveis. Tabelas responsivas.</div>
-            <a href="tables/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🎭</div>
-            <div class="card-title">Brand Guidelines</div>
-            <div class="card-desc">Essência, missão, valores, posicionamento, arquétipos, promessa e tone of voice.</div>
-            <a href="guidelines/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">◎</div>
-            <div class="card-title">Brand Strategy</div>
-            <div class="card-desc">ICP, posicionamento, mecanismo do problema, proposta de valor e arquitetura da oferta.</div>
-            <a href="brand-strategy/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">“ ”</div>
-            <div class="card-title">Voz da Marca</div>
-            <div class="card-desc">Tom, palavras aprovadas, microcopy de análise e mensagens comerciais.</div>
-            <a href="voice/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">V</div>
-            <div class="card-title">Logo & Uso</div>
-            <div class="card-desc">Versões SVG, área de respiro, tamanhos mínimos e usos incorretos.</div>
-            <a href="logo-usage/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">.org</div>
-            <div class="card-title">Domínios & Infraestrutura</div>
-            <div class="card-desc">Plano de presença digital, domínios, custos e arquitetura inicial.</div>
-            <a href="infraestrutura/" class="card-link">Ver →</a>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🏠</div>
-            <div class="card-title">Homepage</div>
-            <div class="card-desc">Landing page principal com hero section, componentes, brand strategy e logo documentation.</div>
-            <a href="./" class="card-link">Voltar →</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- DESIGN SYSTEM OVERVIEW -->
-      <section id="design-system" style="margin-top: var(--space-16);">
-        <h2 class="section-title">⚙️ Design System Completo</h2>
-        <div class="grid">
-          <div class="card">
-            <div class="card-icon">🎯</div>
-            <div class="card-title">Mobile-First Responsive</div>
-            <div class="card-desc">5 breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px).</div>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">♿</div>
-            <div class="card-title">WCAG 2.1 AA Compliant</div>
-            <div class="card-desc">Contraste validado (16.5:1 para texto), focus-visible, motion preferences.</div>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🌙</div>
-            <div class="card-title">Dark Mode Support</div>
-            <div class="card-desc">Suporte completo via prefers-color-scheme. Tokens ajustados automaticamente.</div>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">📦</div>
-            <div class="card-title">200+ CSS Tokens</div>
-            <div class="card-desc">Cores, tipografia, espaçamento, bordas, sombras, transições e z-index.</div>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🔧</div>
-            <div class="card-title">Zero Dependencies</div>
-            <div class="card-desc">HTML5 semântico puro com CSS custom properties. Sem frameworks.</div>
-          </div>
-
-          <div class="card">
-            <div class="card-icon">🚀</div>
-            <div class="card-title">Production-Ready</div>
-            <div class="card-desc">Componentes testados, documentados e prontos para implementação.</div>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
-
-  <footer class="footer">
-    <p style="margin: 0;">&copy; 2026 Verifica PIX — Design System & Brandbook. Todos os direitos reservados.</p>
+</div></div>
+      </div>
+    </section>
+    <section class="proof-strip"><div class="proof-inner"><p>Uma linguagem comum para toda a operação</p><div class="proof-roles"><span>Donos</span><span>Caixas</span><span>Operações</span><span>Produto</span><span>Parceiros</span></div></div></section>
+    <section class="home-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Da dúvida ao próximo passo.</h2><p>O Verifica Pix não tenta parecer um banco. Ele organiza o que está visível, mostra o que merece atenção e orienta uma confirmação responsável.</p></div>
+      <div class="story-steps"><article class="story-step reveal"><span>01</span><h3>Receba a evidência</h3><p>O comprovante chega ao caixa e entra em um fluxo comum, sem depender apenas da experiência de uma pessoa.</p></article><article class="story-step reveal"><span>02</span><h3>Compare os sinais</h3><p>Valor, beneficiário, identificador, horário e coerência visual ficam organizados para revisão.</p></article><article class="story-step reveal"><span>03</span><h3>Decida com contexto</h3><p>O sistema comunica risco aparente e indica a próxima ação, incluindo a confirmação no banco recebedor.</p></article></div>
+    </div></section>
+    <section class="home-section" id="sistema" style="background:var(--vp-surface)"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Uma marca pronta para produto.</h2><p>O brandbook conecta estratégia, linguagem e componentes. Cada regra mostra como a identidade funciona em situações reais.</p></div><div class="system-index reveal"><a class="system-link" href="guidelines/"><span>01</span><strong>Guidelines</strong><p>Essência, missão e princípios</p></a><a class="system-link" href="brand-strategy/"><span>02</span><strong>Estratégia</strong><p>ICP, problema e proposta de valor</p></a><a class="system-link" href="voice/"><span>03</span><strong>Voz</strong><p>Mensagens de análise e microcopy</p></a><a class="system-link" href="logo-usage/"><span>04</span><strong>Logo</strong><p>Assinatura Francy e V da locomarca</p></a><a class="system-link" href="color-tokens/"><span>05</span><strong>Cores</strong><p>Tokens e semântica de risco</p></a><a class="system-link" href="typography/"><span>06</span><strong>Tipografia</strong><p>Hierarquia e famílias</p></a><a class="system-link" href="spacing-layout/"><span>07</span><strong>Layout</strong><p>Espaçamento e responsividade</p></a><a class="system-link" href="tables/"><span>08</span><strong>Componentes</strong><p>Interface real do produto</p></a></div></div></section>
+    <section class="home-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>O produto é a principal imagem da marca.</h2><p>Em vez de promessas abstratas, mostramos a interface, os critérios e os limites que sustentam a confiança.</p></div><div class="split"><div class="receipt reveal"><strong>COMPROVANTE PIX</strong><hr class="receipt-rule"><div class="receipt-row"><span>Valor</span><strong>R$ 1.249,90</strong></div><div class="receipt-row"><span>Data</span><span>10/06/2026 14:32</span></div><div class="receipt-row"><span>Beneficiário</span><span>Loja Exemplo Ltda.</span></div><hr class="receipt-rule"><span class="status status-attention">Revisão necessária</span></div><div class="surface surface-dark reveal"><span class="label" style="color:var(--vp-green-200)">Resultado</span><h2 style="font-size:var(--text-3xl)">Um sinal claro. Uma ação responsável.</h2><p>O identificador precisa ser comparado com a transação na conta recebedora antes de liberar o produto.</p><a class="button button-primary" href="voice/">Conhecer a linguagem <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div></div></div></section>
+    <section class="home-section cta-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Antes de liberar, verifique.</h2><div><p>Use este sistema como fonte oficial para marca, produto, conteúdo e implementação.</p><a class="button button-primary" href="logo-usage/">Acessar arquivos da marca <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div></div></div></section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="assets/logo/verificapix-francy-white.png" alt="Verifica Pix">
+      <p>Brandbook digital, versão 2.0. Confirme sempre a liquidação na conta bancária recebedora.</p>
+    </div>
   </footer>
+  <script src="assets/js/brandbook.js"></script>
 </body>
 </html>

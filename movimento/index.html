@@ -1,341 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Motion & Animation — Verifica PIX. Princípios de movimento, easing functions e timing.">
-  <title>Motion — Verifica PIX</title>
-  <link rel="stylesheet" href="../assets/css/verificapix-tokens.css">
-  <style>
-    body { display: flex; min-height: 100vh; }
-    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--vp-bg-primary); border-right: 1px solid var(--vp-border-light); overflow-y: auto; padding: var(--space-6); z-index: 100; }
-    .sidebar-logo { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-8); text-decoration: none; }
-    .sidebar-logo-symbol { font-size: 32px; }
-    .sidebar-logo-text { display: flex; flex-direction: column; }
-    .sidebar-logo-text h1 { font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; line-height: 1.2; }
-    .sidebar-logo-text small { font-size: var(--text-xs); color: var(--vp-text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
-    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-2); }
-    .sidebar-nav a { display: block; padding: var(--space-3); color: var(--vp-text-secondary); text-decoration: none; border-radius: var(--radius-md); transition: all var(--transition-fast); font-size: var(--text-sm); }
-    .sidebar-nav a:hover { background-color: var(--vp-bg-secondary); color: var(--vp-green); }
-    .main-wrapper { margin-left: 280px; flex: 1; display: flex; flex-direction: column; }
-    .topbar { position: sticky; top: 0; height: 64px; background: var(--vp-bg-primary); border-bottom: 1px solid var(--vp-border-light); display: flex; align-items: center; padding: 0 var(--space-8); z-index: 50; }
-    .topbar h2 { font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; flex: 1; }
-    .content { flex: 1; padding: var(--space-12); overflow-y: auto; }
-    .content-container { max-width: 1200px; margin: 0 auto; }
-    h1 { font-size: var(--text-5xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-6); }
-    h2 { font-size: var(--text-3xl); margin-bottom: var(--space-6); margin-top: var(--space-12); }
-    h3 { font-size: var(--text-xl); margin-bottom: var(--space-4); margin-top: var(--space-6); }
-    p { margin-bottom: var(--space-4); line-height: var(--leading-relaxed); }
-
-    .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0; }
-    .principle-card { padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); border-left: 4px solid var(--vp-green); }
-    .principle-title { font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-3); font-size: var(--text-lg); }
-    .principle-text { font-size: var(--text-sm); color: var(--vp-text-secondary); line-height: var(--leading-relaxed); }
-
-    .animation-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); margin: var(--space-8) 0; }
-    .animation-card { padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--vp-border-light); }
-    .animation-demo { display: flex; align-items: center; justify-content: center; height: 150px; background: var(--vp-bg-primary); border-radius: var(--radius-md); margin-bottom: var(--space-6); overflow: hidden; }
-    .animation-box { width: 60px; height: 60px; background: var(--vp-green); border-radius: var(--radius-md); }
-    .animation-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4); font-size: var(--text-sm); }
-    .animation-info div { display: flex; flex-direction: column; }
-    .animation-info strong { color: var(--vp-text-primary); margin-bottom: var(--space-1); }
-    .animation-info span { color: var(--vp-text-muted); font-family: 'Roboto Mono', monospace; font-size: var(--text-xs); }
-
-    .timing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0; }
-    .timing-card { padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); text-align: center; border-top: 3px solid var(--vp-navy); }
-    .timing-name { font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-2); }
-    .timing-value { font-family: 'Roboto Mono', monospace; font-size: var(--text-sm); color: var(--vp-green); margin-bottom: var(--space-3); }
-    .timing-use { font-size: var(--text-xs); color: var(--vp-text-muted); }
-
-    .easing-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); margin: var(--space-8) 0; }
-    .easing-item { padding: var(--space-4); background: var(--vp-bg-secondary); border-radius: var(--radius-md); }
-    .easing-name { font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-2); font-family: 'Roboto Mono', monospace; }
-    .easing-example { display: flex; align-items: center; height: 40px; background: var(--vp-bg-primary); border-radius: var(--radius-md); overflow: hidden; position: relative; margin: var(--space-3) 0; }
-    .easing-dot { position: absolute; width: 12px; height: 12px; background: var(--vp-green); border-radius: 50%; left: 8px; }
-
-    .footer { background: var(--vp-navy); color: var(--vp-text-inverse); padding: var(--space-8); text-align: center; font-size: var(--text-sm); }
-    @media (max-width: 768px) { .sidebar { display: none; } .main-wrapper { margin-left: 0; } .content { padding: var(--space-6); } h1 { font-size: var(--text-4xl); } }
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Princípios, durações e acessibilidade de motion Verifica Pix.">
+  <title>Movimento que explica. | Verifica Pix</title>
+  <link rel="icon" href="../assets/logo/verificapix-symbol.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/brandbook-pages.css">
 </head>
 <body>
-  <aside class="sidebar">
-    <a href="../index.html" class="sidebar-logo">
-      <span class="sidebar-logo-symbol">✓</span>
-      <div class="sidebar-logo-text">
-        <h1>Verifica<br>PIX</h1>
-        <small>Design System</small>
-      </div>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="docs-navigation" aria-label="Abrir navegação"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a class="brand-link" href="../" aria-label="Verifica Pix, página inicial">
+      <img src="../assets/logo/verificapix-francy.png" alt="Verifica Pix">
     </a>
-    <nav class="sidebar-nav">
-      <a href="#principios">Princípios</a>
-      <a href="#timing">Timing</a>
-      <a href="#easing">Easing Functions</a>
-      <a href="#animacoes">Animações</a>
-      <a href="#movimentos">Movimentos</a>
-      <a href="#regras">Regras & Gotchas</a>
-    </nav>
-  </aside>
+    <span class="header-divider" aria-hidden="true"></span>
+    <span class="header-label">Brandbook &amp; Design System</span>
+    <div class="header-actions">
+      <a class="top-link" href="../guidelines/">Marca</a>
+      <a class="top-link" href="../tables/">Produto</a>
+      <a class="button button-primary" href="../logo-usage/">Baixar logos <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" id="docs-navigation" aria-label="Navegação do brandbook">
 
-  <div class="main-wrapper">
-    <header class="topbar">
-      <h2>Motion & Animation — Verifica PIX</h2>
-    </header>
-
-    <main class="content">
-      <div class="content-container">
-        <h1>Motion & Animation</h1>
-        <p>Princípios de movimento, timing e easing para criar interfaces fluidas e responsivas.</p>
-
-        <!-- Princípios -->
-        <section id="principios">
-          <h2>🎬 Princípios de Movimento</h2>
-          <div class="principles-grid">
-            <div class="principle-card">
-              <div class="principle-title">Propósito</div>
-              <div class="principle-text">Toda animação deve ter um propósito. Não anime apenas para animar — use para guiar atenção, comunicar status ou melhorar percepção de performance.</div>
-            </div>
-            <div class="principle-card">
-              <div class="principle-title">Subtileza</div>
-              <div class="principle-text">Animações sutis são mais sofisticadas. Movimentos grandes e óbvios parecem amadores. Use easing e timing para criar fluidez.</div>
-            </div>
-            <div class="principle-card">
-              <div class="principle-title">Consistência</div>
-              <div class="principle-text">Use os mesmos timing values e easing functions em toda a interface. Consistência cria coerência e previsibilidade.</div>
-            </div>
-            <div class="principle-card">
-              <div class="principle-title">Performance</div>
-              <div class="principle-text">Sempre animate transform, opacity. Evite animar width, height, left, right que forçam reflow. Use GPU acceleration.</div>
-            </div>
-            <div class="principle-card">
-              <div class="principle-title">Acessibilidade</div>
-              <div class="principle-text">Respeite prefers-reduced-motion. Para usuários sensíveis a movimento, reduza ou disabilite animações.</div>
-            </div>
-            <div class="principle-card">
-              <div class="principle-title">Feedback</div>
-              <div class="principle-text">Use movimento para comunicar feedback: hover states, loading states, success/error confirmations. O movimento transmite significado.</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Timing -->
-        <section id="timing">
-          <h2>⏱️ Timing (Duração de Animação)</h2>
-          <p>Tempos recomendados baseados em tipo de interação e contexto visual. Todos disponíveis como tokens CSS (--transition-*).</p>
-          <div class="timing-grid">
-            <div class="timing-card">
-              <div class="timing-name">Fast</div>
-              <div class="timing-value">100ms</div>
-              <div class="timing-use">Hover, focus, micro-interactions</div>
-            </div>
-            <div class="timing-card">
-              <div class="timing-name">Normal</div>
-              <div class="timing-value">200ms</div>
-              <div class="timing-use">Standard transitions, slides</div>
-            </div>
-            <div class="timing-card">
-              <div class="timing-name">Slow</div>
-              <div class="timing-value">300ms</div>
-              <div class="timing-use">Modal opens, page transitions</div>
-            </div>
-            <div class="timing-card">
-              <div class="timing-name">Very Slow</div>
-              <div class="timing-value">500ms</div>
-              <div class="timing-use">Loading states, complex animations</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Easing -->
-        <section id="easing">
-          <h2>📈 Easing Functions</h2>
-          <p>Curvas de easing predefinidas. Cada uma comunica diferente significado e energia. Use ease-out para entradas, ease-in para saídas.</p>
-          <div class="easing-grid">
-            <div class="easing-item">
-              <div class="easing-name">ease-in-out (padrão)</div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-bottom: var(--space-2);">cubic-bezier(0.4, 0, 0.2, 1)</div>
-              <div class="easing-example">
-                <div class="easing-dot" style="animation: slide-ease-inout 2s infinite;"></div>
-              </div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted);">Uso: Transições suaves e naturais. Recomendado para a maioria dos casos.</div>
-            </div>
-            <div class="easing-item">
-              <div class="easing-name">ease-out (desaceleração)</div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-bottom: var(--space-2);">cubic-bezier(0, 0, 0.2, 1)</div>
-              <div class="easing-example">
-                <div class="easing-dot" style="animation: slide-ease-out 2s infinite;"></div>
-              </div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted);">Uso: Entradas (fade in, slide in). Começa rápido, termina lento.</div>
-            </div>
-            <div class="easing-item">
-              <div class="easing-name">ease-in (aceleração)</div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-bottom: var(--space-2);">cubic-bezier(0.4, 0, 1, 1)</div>
-              <div class="easing-example">
-                <div class="easing-dot" style="animation: slide-ease-in 2s infinite;"></div>
-              </div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted);">Uso: Saídas (fade out, slide out). Começa lento, termina rápido.</div>
-            </div>
-            <div class="easing-item">
-              <div class="easing-name">linear (constante)</div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-bottom: var(--space-2);">linear</div>
-              <div class="easing-example">
-                <div class="easing-dot" style="animation: slide-linear 2s infinite;"></div>
-              </div>
-              <div style="font-size: var(--text-xs); color: var(--vp-text-muted);">Uso: Progresso indeterminado, loaders. Velocidade constante.</div>
-            </div>
-          </div>
-          <style>
-            @keyframes slide-ease-inout { from { left: 8px; } to { left: calc(100% - 20px); } }
-            @keyframes slide-ease-out { from { left: 8px; } to { left: calc(100% - 20px); } }
-            @keyframes slide-ease-in { from { left: 8px; } to { left: calc(100% - 20px); } }
-            @keyframes slide-linear { from { left: 8px; } to { left: calc(100% - 20px); } }
-            .easing-example:nth-child(1) .easing-dot { animation: slide-ease-inout 2s cubic-bezier(0.4, 0, 0.2, 1) infinite !important; }
-            .easing-example:nth-child(2) .easing-dot { animation: slide-ease-out 2s cubic-bezier(0, 0, 0.2, 1) infinite !important; }
-            .easing-example:nth-child(3) .easing-dot { animation: slide-ease-in 2s cubic-bezier(0.4, 0, 1, 1) infinite !important; }
-            .easing-example:nth-child(4) .easing-dot { animation: slide-linear 2s linear infinite !important; }
-          </style>
-        </section>
-
-        <!-- Animações Comuns -->
-        <section id="animacoes">
-          <h2>✨ Animações Comuns</h2>
-          <p>Padrões de animação usados na interface do Verifica PIX.</p>
-
-          <h3>Fade In/Out</h3>
-          <div class="animation-card">
-            <div class="animation-demo">
-              <div class="animation-box" style="animation: fadeInOut 3s ease-in-out infinite;"></div>
-            </div>
-            <div class="animation-info">
-              <div>
-                <strong>Timing:</strong>
-                <span>200-300ms</span>
-              </div>
-              <div>
-                <strong>Easing:</strong>
-                <span>ease-in-out</span>
-              </div>
-              <div>
-                <strong>Uso:</strong>
-                <span>Modal opens, visibility toggle</span>
-              </div>
-            </div>
-          </div>
-
-          <h3 style="margin-top: var(--space-8);">Slide In/Out</h3>
-          <div class="animation-card">
-            <div class="animation-demo">
-              <div class="animation-box" style="animation: slideInOut 3s ease-out infinite;"></div>
-            </div>
-            <div class="animation-info">
-              <div>
-                <strong>Timing:</strong>
-                <span>300ms</span>
-              </div>
-              <div>
-                <strong>Easing:</strong>
-                <span>ease-out</span>
-              </div>
-              <div>
-                <strong>Uso:</strong>
-                <span>Sidebar, dropdowns, alerts</span>
-              </div>
-            </div>
-          </div>
-
-          <h3 style="margin-top: var(--space-8);">Scale In/Out</h3>
-          <div class="animation-card">
-            <div class="animation-demo">
-              <div class="animation-box" style="animation: scaleInOut 3s ease-out infinite;"></div>
-            </div>
-            <div class="animation-info">
-              <div>
-                <strong>Timing:</strong>
-                <span>200ms</span>
-              </div>
-              <div>
-                <strong>Easing:</strong>
-                <span>ease-out</span>
-              </div>
-              <div>
-                <strong>Uso:</strong>
-                <span>Tooltips, popovers, micro-interactions</span>
-              </div>
-            </div>
-          </div>
-
-          <style>
-            @keyframes fadeInOut { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-            @keyframes slideInOut { 0%, 100% { transform: translateX(-100%); } 50% { transform: translateX(0); } }
-            @keyframes scaleInOut { 0%, 100% { transform: scale(0.8); } 50% { transform: scale(1); } }
-          </style>
-        </section>
-
-        <!-- Movimentos Específicos -->
-        <section id="movimentos">
-          <h2>🎯 Movimentos Específicos do Verifica PIX</h2>
-          <p>Padrões de movimento que reforçam identidade da marca.</p>
-
-          <h3>Logo Animation (Checkmark reveal)</h3>
-          <p style="font-size: var(--text-sm); color: var(--vp-text-muted);">O símbolo "✓" do Verifica PIX revela-se com um efeito de fade-in e scale. Usado em:
-          <ul style="margin-left: var(--space-6); margin-top: var(--space-3);">
-            <li>• Page load (hero section)</li>
-            <li>• Success state (comprovante validado)</li>
-            <li>• Brand guidelines page</li>
-          </ul>
-          </p>
-          <p style="font-size: var(--text-xs); color: var(--vp-green); font-family: 'Roboto Mono', monospace; margin-top: var(--space-4);">Timing: 400ms ease-out | Easing: cubic-bezier(0, 0, 0.2, 1)</p>
-
-          <h3 style="margin-top: var(--space-8);">Status Pulse</h3>
-          <p style="font-size: var(--text-sm); color: var(--vp-text-muted);">Pulso sutil em status indicators (danger, warning, success). Comunica estado ativo ou importância.</p>
-          <p style="font-size: var(--text-xs); color: var(--vp-green); font-family: 'Roboto Mono', monospace; margin-top: var(--space-4);">Timing: 2s infinite | Easing: cubic-bezier(0.4, 0, 0.6, 1)</p>
-
-          <h3 style="margin-top: var(--space-8);">Loading Spinner</h3>
-          <p style="font-size: var(--text-sm); color: var(--vp-text-muted);">Spinner contínuo para estados de carregamento. Rota em torno do centro.</p>
-          <p style="font-size: var(--text-xs); color: var(--vp-green); font-family: 'Roboto Mono', monospace; margin-top: var(--space-4);">Timing: 1s infinite linear | Transform: rotate(360deg)</p>
-        </section>
-
-        <!-- Regras -->
-        <section id="regras">
-          <h2>📋 Regras & Gotchas</h2>
-          <div class="vp-alert vp-alert--warning" style="margin-bottom: var(--space-4);">
-            <div class="vp-alert-icon">⚠</div>
-            <div class="vp-alert-content">
-              <div class="vp-alert-title">Respeite prefers-reduced-motion</div>
-              <div class="vp-alert-text">Sempre use @media (prefers-reduced-motion: reduce) { animation: none; } para usuários que desabilitaram animações no SO.</div>
-            </div>
-          </div>
-
-          <div class="vp-alert vp-alert--danger" style="margin-bottom: var(--space-4);">
-            <div class="vp-alert-icon">✗</div>
-            <div class="vp-alert-content">
-              <div class="vp-alert-title">Não anime width/height/left/right</div>
-              <div class="vp-alert-text">Forçam reflows caros. Use transform: translate(), scale() em vez disso. Sempre prefira GPU-accelerated properties.</div>
-            </div>
-          </div>
-
-          <div class="vp-alert vp-alert--success" style="margin-bottom: var(--space-4);">
-            <div class="vp-alert-icon">✓</div>
-            <div class="vp-alert-content">
-              <div class="vp-alert-title">Use transition shorthand com care</div>
-              <div class="vp-alert-text">Sempre especifique propriedades: transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;</div>
-            </div>
-          </div>
-
-          <div class="vp-alert vp-alert--info">
-            <div class="vp-alert-icon">ℹ</div>
-            <div class="vp-alert-content">
-              <div class="vp-alert-title">Use will-change com moderação</div>
-              <div class="vp-alert-text">will-change: transform; em elementos frequentemente animados. Remova após animação terminar para evitar bloat de memória.</div>
-            </div>
-          </div>
-        </section>
-
+      <div class="nav-group">
+        <p class="nav-group-title">Marca</p>
+        <nav class="docs-nav">
+          <a href="../guidelines/"><span class="nav-dot"></span>Guidelines</a><a href="../brand-strategy/"><span class="nav-dot"></span>Estratégia</a><a href="../voice/"><span class="nav-dot"></span>Voz e mensagens</a><a href="../logo-usage/"><span class="nav-dot"></span>Logo e aplicação</a>
+        </nav>
       </div>
-    </main>
+      <div class="nav-group">
+        <p class="nav-group-title">Fundamentos</p>
+        <nav class="docs-nav">
+          <a href="../color-tokens/"><span class="nav-dot"></span>Cores</a><a href="../typography/"><span class="nav-dot"></span>Tipografia</a><a href="../spacing-layout/"><span class="nav-dot"></span>Espaçamento e layout</a><a href="../movimento/" aria-current="page"><span class="nav-dot"></span>Movimento</a>
+        </nav>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-title">Produto</p>
+        <nav class="docs-nav">
+          <a href="../tables/"><span class="nav-dot"></span>Componentes e tabelas</a><a href="../infraestrutura/"><span class="nav-dot"></span>Infraestrutura</a>
+        </nav>
+      </div>
+  </aside>
+    <main class="docs-main" id="conteudo">
+      <article class="docs-content">
+        <header class="page-intro reveal">
+          <span class="eyebrow">Fundamento visual</span>
+          <h1>Movimento que explica.</h1>
+          <p>A animação serve para orientar atenção e confirmar mudança de estado. Alertas de risco não pulsam, não saltam e não celebram.</p>
+        </header>
 
-    <footer class="footer">
-      <p>&copy; 2026 Verifica PIX. Design System — Motion & Animation.</p>
-    </footer>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Princípios</h2><p>Movimento é parte da linguagem operacional e deve permanecer discreto.</p></div><ol class="principle-list"><li><span class="principle-number">01</span><div><h3>Explicar continuidade</h3><p>Use transição quando um elemento muda de estado ou localização.</p></div></li><li><span class="principle-number">02</span><div><h3>Preservar estabilidade</h3><p>Anime opacidade e transform, evitando mudanças que recalculam layout.</p></div></li><li><span class="principle-number">03</span><div><h3>Respeitar contexto</h3><p>Reduza movimento em cenários de risco e para quem solicitar.</p></div></li></ol></section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Tokens</h2><p>Duas durações cobrem a maior parte do sistema.</p></div><div class="table-wrap"><table class="token-table"><thead><tr><th>Token</th><th>Valor</th><th>Uso</th></tr></thead><tbody><tr><td><code>--duration-fast</code></td><td>180ms</td><td>Hover, foco, botão e badge</td></tr><tr><td><code>--duration-base</code></td><td>420ms</td><td>Entrada de seção e navegação móvel</td></tr><tr><td><code>--ease-out</code></td><td><code>cubic-bezier(0.16,1,0.3,1)</code></td><td>Desaceleração natural</td></tr></tbody></table></div></section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Acessibilidade</h2><p>O conteúdo nunca depende da animação para ser compreendido.</p></div><div class="callout"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg><p>Com <code>prefers-reduced-motion: reduce</code>, durações são praticamente zeradas e a rolagem suave é desativada.</p></div></section>
+      </article>
+    </main>
   </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="../assets/logo/verificapix-francy-white.png" alt="Verifica Pix">
+      <p>Brandbook digital, versão 2.0. Confirme sempre a liquidação na conta bancária recebedora.</p>
+    </div>
+  </footer>
+  <script src="../assets/js/brandbook.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 # Verifica Pix Brandbook
 
-Brandbook e Design System do Verifica Pix em HTML, CSS e SVG.
+Brandbook e Design System do Verifica Pix em HTML, CSS, JavaScript e SVG.
+
+Versão 2.0 com navegação responsiva, demonstrações de produto, tokens em OKLCH e
+a assinatura final da marca com o V aberto e tipografia Francy preservada.
 
 ## Visualização local
 
@@ -22,3 +25,9 @@ Acesse `http://localhost:8080`.
 - Componentes e tabelas
 - Uso da logomarca
 - Domínios e infraestrutura
+
+## Reconstruir os arquivos
+
+```bash
+node scripts/build-brandbook.mjs
+```
