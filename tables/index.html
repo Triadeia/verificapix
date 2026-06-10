@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tabelas & Componentes — Verifica PIX. Tabelas responsivas, badges de status, e componentes reutilizáveis.">
+  <title>Tables & Components — Verifica PIX</title>
+  <link rel="stylesheet" href="../assets/css/verificapix-tokens.css">
+  <style>
+    body { display: flex; min-height: 100vh; }
+    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--vp-bg-primary); border-right: 1px solid var(--vp-border-light); overflow-y: auto; padding: var(--space-6); z-index: 100; }
+    .sidebar-logo { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-8); text-decoration: none; }
+    .sidebar-logo-symbol { font-size: 32px; }
+    .sidebar-logo-text { display: flex; flex-direction: column; }
+    .sidebar-logo-text h1 { font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; line-height: 1.2; }
+    .sidebar-logo-text small { font-size: var(--text-xs); color: var(--vp-text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-2); }
+    .sidebar-nav a { display: block; padding: var(--space-3); color: var(--vp-text-secondary); text-decoration: none; border-radius: var(--radius-md); transition: all var(--transition-fast); font-size: var(--text-sm); }
+    .sidebar-nav a:hover { background-color: var(--vp-bg-secondary); color: var(--vp-green); }
+    .main-wrapper { margin-left: 280px; flex: 1; display: flex; flex-direction: column; }
+    .topbar { position: sticky; top: 0; height: 64px; background: var(--vp-bg-primary); border-bottom: 1px solid var(--vp-border-light); display: flex; align-items: center; padding: 0 var(--space-8); z-index: 50; }
+    .topbar h2 { font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; flex: 1; }
+    .content { flex: 1; padding: var(--space-12); overflow-y: auto; }
+    .content-container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: var(--text-5xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-6); }
+    h2 { font-size: var(--text-3xl); margin-bottom: var(--space-6); margin-top: var(--space-12); }
+    h3 { font-size: var(--text-xl); margin-bottom: var(--space-4); margin-top: var(--space-6); }
+    p { margin-bottom: var(--space-4); line-height: var(--leading-relaxed); }
+
+    table { width: 100%; border-collapse: collapse; margin: var(--space-8) 0; }
+    table thead { background: var(--vp-bg-secondary); border-bottom: 2px solid var(--vp-border-light); }
+    table th { padding: var(--space-4); text-align: left; font-weight: var(--weight-bold); color: var(--vp-text-primary); font-size: var(--text-sm); }
+    table td { padding: var(--space-4); border-bottom: 1px solid var(--vp-border-light); font-size: var(--text-sm); }
+    table tbody tr:hover { background: var(--vp-bg-secondary); }
+
+    .badge { display: inline-block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); font-size: var(--text-xs); font-weight: var(--weight-semibold); }
+    .badge-success { background: rgba(71, 165, 88, 0.1); color: var(--vp-success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.1); color: var(--vp-warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.1); color: var(--vp-danger); }
+    .badge-info { background: rgba(59, 130, 246, 0.1); color: var(--vp-info); }
+    .badge-neutral { background: var(--vp-bg-secondary); color: var(--vp-text-secondary); }
+
+    .badge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0; }
+    .badge-card { padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--vp-border-light); }
+    .badge-sample { margin-bottom: var(--space-4); }
+    .badge-code { font-family: 'Roboto Mono', monospace; font-size: var(--text-xs); color: var(--vp-text-muted); }
+
+    .component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0; }
+    .component-card { padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); border: 1px solid var(--vp-border-light); }
+    .component-title { font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-3); }
+    .component-sample { margin-bottom: var(--space-4); padding: var(--space-4); background: var(--vp-bg-primary); border-radius: var(--radius-md); }
+
+    .footer { background: var(--vp-navy); color: var(--vp-text-inverse); padding: var(--space-8); text-align: center; font-size: var(--text-sm); }
+    @media (max-width: 768px) { .sidebar { display: none; } .main-wrapper { margin-left: 0; } .content { padding: var(--space-6); } h1 { font-size: var(--text-4xl); } table { font-size: var(--text-xs); } table th, table td { padding: var(--space-2); } }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="../index.html" class="sidebar-logo">
+      <span class="sidebar-logo-symbol">✓</span>
+      <div class="sidebar-logo-text">
+        <h1>Verifica<br>PIX</h1>
+        <small>Design System</small>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="#tabelas">Tabelas</a>
+      <a href="#badges">Badges de Status</a>
+      <a href="#botoes">Botões</a>
+      <a href="#inputs">Inputs</a>
+      <a href="#cards">Cards</a>
+      <a href="#alertas">Alertas</a>
+    </nav>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <h2>Tables & Components — Verifica PIX</h2>
+    </header>
+
+    <main class="content">
+      <div class="content-container">
+        <h1>Tabelas & Componentes</h1>
+        <p>Componentes reutilizáveis, tabelas responsivas e padrões de status para a interface do Verifica PIX.</p>
+
+        <!-- Tabelas -->
+        <section id="tabelas">
+          <h2>📊 Tabelas Responsivas</h2>
+          <p>Tabelas com hover states, zebra striping e responsividade automática.</p>
+          
+          <h3>Exemplo: Análises de Comprovante</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Merchant</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#001234</td>
+                <td>Loja A - São Paulo</td>
+                <td>R$ 250,00</td>
+                <td><span class="badge badge-success">✓ Válido</span></td>
+                <td>24 Jun 2026</td>
+              </tr>
+              <tr>
+                <td>#001235</td>
+                <td>Comércio B - Rio</td>
+                <td>R$ 1.500,00</td>
+                <td><span class="badge badge-warning">⚠ Revisar</span></td>
+                <td>24 Jun 2026</td>
+              </tr>
+              <tr>
+                <td>#001236</td>
+                <td>E-commerce C</td>
+                <td>R$ 3.200,00</td>
+                <td><span class="badge badge-danger">✗ Fraude</span></td>
+                <td>24 Jun 2026</td>
+              </tr>
+              <tr>
+                <td>#001237</td>
+                <td>Plataforma D</td>
+                <td>R$ 890,50</td>
+                <td><span class="badge badge-success">✓ Válido</span></td>
+                <td>24 Jun 2026</td>
+              </tr>
+              <tr>
+                <td>#001238</td>
+                <td>Negócio E - MG</td>
+                <td>R$ 2.100,00</td>
+                <td><span class="badge badge-info">ℹ Pendente</span></td>
+                <td>24 Jun 2026</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="vp-alert vp-alert--info" style="margin-top: var(--space-6);">
+            <div class="vp-alert-icon">ℹ</div>
+            <div class="vp-alert-content">
+              <div class="vp-alert-title">Responsividade</div>
+              <div class="vp-alert-text">Em telas pequenas (< 768px), a tabela encolhe a fonte e reduz padding. Em telas muito pequenas, considere layout de cards em vez de tabela horizontal.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Badges -->
+        <section id="badges">
+          <h2>🏷️ Badges de Status</h2>
+          <p>Indicadores semânticos para comunicar estado, resultado ou categoria. 5 variações de cor.</p>
+          
+          <div class="badge-grid">
+            <div class="badge-card">
+              <div class="component-title">Success</div>
+              <div class="badge-sample">
+                <span class="badge badge-success">✓ Válido</span>
+              </div>
+              <div class="badge-code">.badge.badge-success</div>
+              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-top: var(--space-2);">Comprovante confirmado, análise positiva</div>
+            </div>
+
+            <div class="badge-card">
+              <div class="component-title">Warning</div>
+              <div class="badge-sample">
+                <span class="badge badge-warning">⚠ Revisar</span>
+              </div>
+              <div class="badge-code">.badge.badge-warning</div>
+              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-top: var(--space-2);">Sinais de risco moderado, atenção recomendada</div>
+            </div>
+
+            <div class="badge-card">
+              <div class="component-title">Danger</div>
+              <div class="badge-sample">
+                <span class="badge badge-danger">✗ Fraude</span>
+              </div>
+              <div class="badge-code">.badge.badge-danger</div>
+              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-top: var(--space-2);">Comprovante fraudulento, ação imediata</div>
+            </div>
+
+            <div class="badge-card">
+              <div class="component-title">Info</div>
+              <div class="badge-sample">
+                <span class="badge badge-info">ℹ Pendente</span>
+              </div>
+              <div class="badge-code">.badge.badge-info</div>
+              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-top: var(--space-2);">Análise em progresso, aguardando confirmação</div>
+            </div>
+
+            <div class="badge-card">
+              <div class="component-title">Neutral</div>
+              <div class="badge-sample">
+                <span class="badge badge-neutral">⊙ Processando</span>
+              </div>
+              <div class="badge-code">.badge.badge-neutral</div>
+              <div style="font-size: var(--text-xs); color: var(--vp-text-muted); margin-top: var(--space-2);">Estado neutro ou contexto geral</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Botões -->
+        <section id="botoes">
+          <h2>🔘 Variações de Botão</h2>
+          <p>Botões em 3 estilos: primário (ação principal), secundário (ações alternativas), e outline (menos destaque).</p>
+          
+          <h3>Primary (CTA)</h3>
+          <div style="margin: var(--space-6) 0; padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg);">
+            <button class="vp-button vp-button--primary" style="margin-right: var(--space-3);">Analisar Comprovante</button>
+            <button class="vp-button vp-button--primary vp-button--sm">Small CTA</button>
+          </div>
+
+          <h3 style="margin-top: var(--space-8);">Secondary (Alternativas)</h3>
+          <div style="margin: var(--space-6) 0; padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg);">
+            <button class="vp-button vp-button--secondary" style="margin-right: var(--space-3);">Cancelar</button>
+            <button class="vp-button vp-button--secondary vp-button--sm">Small Secondary</button>
+          </div>
+
+          <h3 style="margin-top: var(--space-8);">Outline (Menos destaque)</h3>
+          <div style="margin: var(--space-6) 0; padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg);">
+            <button class="vp-button vp-button--outline" style="margin-right: var(--space-3);">Saiba Mais</button>
+            <button class="vp-button vp-button--outline vp-button--sm">Small Link</button>
+          </div>
+        </section>
+
+        <!-- Inputs -->
+        <section id="inputs">
+          <h2>⌨️ Inputs & Forms</h2>
+          <p>Campos de entrada com estados default, focus, disabled e error.</p>
+          
+          <div style="margin: var(--space-8) 0; padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); max-width: 400px;">
+            <div style="margin-bottom: var(--space-6);">
+              <label style="display: block; margin-bottom: var(--space-2); font-weight: var(--weight-semibold); color: var(--vp-text-primary); font-size: var(--text-sm);">Número do Comprovante</label>
+              <input type="text" placeholder="ex: PIX123456" style="width: 100%; padding: var(--space-3); border: 1px solid var(--vp-border-light); border-radius: var(--radius-md); font-size: var(--text-base); font-family: inherit; outline: none; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: var(--space-6);">
+              <label style="display: block; margin-bottom: var(--space-2); font-weight: var(--weight-semibold); color: var(--vp-text-primary); font-size: var(--text-sm);">Valor (R$)</label>
+              <input type="number" placeholder="ex: 250.00" style="width: 100%; padding: var(--space-3); border: 1px solid var(--vp-border-light); border-radius: var(--radius-md); font-size: var(--text-base); font-family: inherit; outline: none; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-bottom: var(--space-6);">
+              <label style="display: block; margin-bottom: var(--space-2); font-weight: var(--weight-semibold); color: var(--vp-text-primary); font-size: var(--text-sm);">Status</label>
+              <select style="width: 100%; padding: var(--space-3); border: 1px solid var(--vp-border-light); border-radius: var(--radius-md); font-size: var(--text-base); font-family: inherit; outline: none; box-sizing: border-box;">
+                <option>Selecione um status</option>
+                <option>Válido</option>
+                <option>Revisar</option>
+                <option>Fraude</option>
+              </select>
+            </div>
+
+            <button class="vp-button vp-button--primary" style="width: 100%;">Submeter Análise</button>
+          </div>
+        </section>
+
+        <!-- Cards -->
+        <section id="cards">
+          <h2>🎴 Cards & Containers</h2>
+          <p>Cards para agrupar conteúdo relacionado. Com espaçamento, sombras e bordas consistentes.</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0;">
+            <div class="vp-card">
+              <h3 class="vp-card-title">Análise Rápida</h3>
+              <p class="vp-card-text">Análise instantânea de comprovante via WhatsApp. Respostas em segundos com padrões de risco.</p>
+              <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--vp-border-light);">
+                <button class="vp-button vp-button--primary vp-button--sm">Começar</button>
+              </div>
+            </div>
+
+            <div class="vp-card">
+              <h3 class="vp-card-title">Dashboard</h3>
+              <p class="vp-card-text">Histórico de análises, padrões de fraude detectados, relatórios por período.</p>
+              <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--vp-border-light);">
+                <button class="vp-button vp-button--primary vp-button--sm">Acessar</button>
+              </div>
+            </div>
+
+            <div class="vp-card">
+              <h3 class="vp-card-title">Educação</h3>
+              <p class="vp-card-text">Artigos e dicas sobre como detectar sinais de fraude em comprovantes Pix.</p>
+              <div style="margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--vp-border-light);">
+                <button class="vp-button vp-button--outline vp-button--sm">Ler</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Alertas -->
+        <section id="alertas">
+          <h2>🚨 Alertas & Notificações</h2>
+          <p>Diferentes tipos de alerta para comunicar informações importantes ao usuário.</p>
+
+          <div class="vp-alert vp-alert--success" style="margin-bottom: var(--space-4);">
+            <div class="vp-alert-icon">✓</div>
+            <div class="vp-alert-content">
+              <div class="vp-alert-title">Sucesso</div>
+              <div class="vp-alert-text">Comprovante validado com sucesso. Este Pix pode ser liberado com confiança.</div>
+            </div>
+          </div>
+
+          <div class="vp-alert vp-alert--warning" style="margin-bottom: var(--space-4);">
+            <div class="vp-alert-icon">⚠</div>
+            <div class="vp-alert-content">
+              <div class="vp-alert-title">Aviso</div>
+              <div class="vp-alert-text">Este comprovante apresenta sinais de risco. Recomendamos revisar com o cliente antes de liberar o produto.</div>
+            </div>
+          </div>
+
+          <div class="vp-alert vp-alert--danger" style="margin-bottom: var(--space-4);">
+            <div class="vp-alert-icon">✗</div>
+            <div class="vp-alert-content">
+              <div class="vp-alert-title">Perigo</div>
+              <div class="vp-alert-text">ALERTA: Este comprovante apresenta múltiplos indicadores de fraude. NÃO libere o produto sem verificação manual imediata.</div>
+            </div>
+          </div>
+
+          <div class="vp-alert vp-alert--info">
+            <div class="vp-alert-icon">ℹ</div>
+            <div class="vp-alert-content">
+              <div class="vp-alert-title">Informação</div>
+              <div class="vp-alert-text">A validação de Pix não substitui verificação manual. Use como camada adicional de proteção contra fraude.</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Verifica PIX. Design System — Tables & Components.</p>
+    </footer>
+  </div>
+</body>
+</html>

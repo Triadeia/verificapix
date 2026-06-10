@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Spacing & Layout — Verifica PIX. Escala de espaçamento, grid system e breakpoints responsivos.">
+  <title>Spacing & Layout — Verifica PIX</title>
+  <link rel="stylesheet" href="../assets/css/verificapix-tokens.css">
+  <style>
+    body { display: flex; min-height: 100vh; }
+    .sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; background: var(--vp-bg-primary); border-right: 1px solid var(--vp-border-light); overflow-y: auto; padding: var(--space-6); z-index: 100; }
+    .sidebar-logo { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-8); text-decoration: none; }
+    .sidebar-logo-symbol { font-size: 32px; }
+    .sidebar-logo-text { display: flex; flex-direction: column; }
+    .sidebar-logo-text h1 { font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; line-height: 1.2; }
+    .sidebar-logo-text small { font-size: var(--text-xs); color: var(--vp-text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+    .sidebar-nav { display: flex; flex-direction: column; gap: var(--space-2); }
+    .sidebar-nav a { display: block; padding: var(--space-3); color: var(--vp-text-secondary); text-decoration: none; border-radius: var(--radius-md); transition: all var(--transition-fast); font-size: var(--text-sm); }
+    .sidebar-nav a:hover { background-color: var(--vp-bg-secondary); color: var(--vp-green); }
+    .main-wrapper { margin-left: 280px; flex: 1; display: flex; flex-direction: column; }
+    .topbar { position: sticky; top: 0; height: 64px; background: var(--vp-bg-primary); border-bottom: 1px solid var(--vp-border-light); display: flex; align-items: center; padding: 0 var(--space-8); z-index: 50; }
+    .topbar h2 { font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin: 0; flex: 1; }
+    .content { flex: 1; padding: var(--space-12); overflow-y: auto; }
+    .content-container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: var(--text-5xl); font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-6); }
+    h2 { font-size: var(--text-3xl); margin-bottom: var(--space-6); margin-top: var(--space-12); }
+    h3 { font-size: var(--text-xl); margin-bottom: var(--space-4); margin-top: var(--space-6); }
+    p { margin-bottom: var(--space-4); line-height: var(--leading-relaxed); }
+
+    .spacing-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); margin: var(--space-8) 0; }
+    .spacing-item { display: flex; align-items: center; gap: var(--space-6); }
+    .spacing-visual { background: linear-gradient(90deg, var(--vp-green) 0%, rgba(71, 165, 88, 0.3) 100%); border-radius: var(--radius-md); flex-shrink: 0; }
+    .spacing-info { flex: 1; }
+    .spacing-value { font-weight: var(--weight-bold); color: var(--vp-text-primary); margin-bottom: var(--space-1); }
+    .spacing-token { font-family: 'Roboto Mono', monospace; font-size: var(--text-xs); color: var(--vp-text-muted); }
+
+    .grid-demo { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--space-4); margin: var(--space-8) 0; padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); }
+    .grid-item { padding: var(--space-4); background: var(--vp-green); color: white; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; min-height: 100px; font-weight: var(--weight-semibold); }
+
+    .breakpoint-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-6); margin: var(--space-8) 0; }
+    .breakpoint-card { border: 1px solid var(--vp-border-light); border-radius: var(--radius-lg); overflow: hidden; }
+    .breakpoint-header { padding: var(--space-4); background: var(--vp-navy); color: white; }
+    .breakpoint-name { font-weight: var(--weight-bold); font-size: var(--text-lg); margin-bottom: var(--space-1); }
+    .breakpoint-size { font-family: 'Roboto Mono', monospace; font-size: var(--text-sm); opacity: 0.9; }
+    .breakpoint-content { padding: var(--space-6); }
+    .breakpoint-detail { display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: var(--text-sm); }
+    .breakpoint-detail strong { color: var(--vp-text-primary); }
+
+    .footer { background: var(--vp-navy); color: var(--vp-text-inverse); padding: var(--space-8); text-align: center; font-size: var(--text-sm); }
+    @media (max-width: 768px) { .sidebar { display: none; } .main-wrapper { margin-left: 0; } .content { padding: var(--space-6); } h1 { font-size: var(--text-4xl); } }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <a href="../index.html" class="sidebar-logo">
+      <span class="sidebar-logo-symbol">✓</span>
+      <div class="sidebar-logo-text">
+        <h1>Verifica<br>PIX</h1>
+        <small>Design System</small>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <a href="#escala">Escala de Espaçamento</a>
+      <a href="#grid">Grid System</a>
+      <a href="#breakpoints">Breakpoints</a>
+      <a href="#container">Container Sizes</a>
+      <a href="#gaps">Gap Scale</a>
+    </nav>
+  </aside>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <h2>Spacing & Layout — Verifica PIX</h2>
+    </header>
+
+    <main class="content">
+      <div class="content-container">
+        <h1>Spacing & Layout</h1>
+        <p>Sistema coeso de espaçamento, grid e responsividade. Baseado em escala 4px para consistência visual.</p>
+
+        <!-- Escala -->
+        <section id="escala">
+          <h2>📏 Escala de Espaçamento</h2>
+          <p>Escala modular de 4px. De --space-1 (4px) até --space-32 (128px). Use para padding, margin e gaps.</p>
+          <div class="spacing-grid">
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 16px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">4px (1 unit)</div>
+                <div class="spacing-token">--space-1 — Micro gaps, icon padding</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 32px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">8px (2 units)</div>
+                <div class="spacing-token">--space-2 — Tight spacing, borders</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 48px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">12px (3 units)</div>
+                <div class="spacing-token">--space-3 — Buttons, small cards</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 64px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">16px (4 units)</div>
+                <div class="spacing-token">--space-4 — Default padding</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 80px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">20px (5 units)</div>
+                <div class="spacing-token">--space-5 — Component spacing</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 96px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">24px (6 units)</div>
+                <div class="spacing-token">--space-6 — Section padding</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 128px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">32px (8 units)</div>
+                <div class="spacing-token">--space-8 — Large sections, gaps</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 160px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">40px (10 units)</div>
+                <div class="spacing-token">--space-10 — Page padding</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 192px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">48px (12 units)</div>
+                <div class="spacing-token">--space-12 — Main content padding</div>
+              </div>
+            </div>
+            <div class="spacing-item">
+              <div class="spacing-visual" style="width: 224px; height: 24px;"></div>
+              <div class="spacing-info">
+                <div class="spacing-value">56px (14 units)</div>
+                <div class="spacing-token">--space-14 — Hero spacing</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Grid -->
+        <section id="grid">
+          <h2>🔲 Grid System</h2>
+          <p>Grid fluido com auto-fit. Responsivo por padrão, coluna única em mobile.</p>
+          <h3>Grid 3 colunas (auto-fit, minmax 300px)</h3>
+          <div class="grid-demo" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="grid-item">Coluna 1</div>
+            <div class="grid-item">Coluna 2</div>
+            <div class="grid-item">Coluna 3</div>
+          </div>
+          <h3 style="margin-top: var(--space-8);">Grid 4 colunas (auto-fit, minmax 250px)</h3>
+          <div class="grid-demo" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <div class="grid-item">1</div>
+            <div class="grid-item">2</div>
+            <div class="grid-item">3</div>
+            <div class="grid-item">4</div>
+          </div>
+        </section>
+
+        <!-- Breakpoints -->
+        <section id="breakpoints">
+          <h2>📱 Breakpoints Responsivos</h2>
+          <p>5 pontos de quebra para mobile-first design. Padrão: mobile primeiro, depois tablet, desktop, etc.</p>
+          <div class="breakpoint-grid">
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <div class="breakpoint-name">sm (Small)</div>
+                <div class="breakpoint-size">640px</div>
+              </div>
+              <div class="breakpoint-content">
+                <div class="breakpoint-detail">
+                  <strong>Dispositivo:</strong>
+                  <span>Smartphones landscape</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Uso:</strong>
+                  <span>Layout de 2 colunas</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Query:</strong>
+                  <span>@media (min-width: 640px)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <div class="breakpoint-name">md (Medium)</div>
+                <div class="breakpoint-size">768px</div>
+              </div>
+              <div class="breakpoint-content">
+                <div class="breakpoint-detail">
+                  <strong>Dispositivo:</strong>
+                  <span>Tablets portrait</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Uso:</strong>
+                  <span>Sidebar aparece, layout 2-3 colunas</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Query:</strong>
+                  <span>@media (min-width: 768px)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <div class="breakpoint-name">lg (Large)</div>
+                <div class="breakpoint-size">1024px</div>
+              </div>
+              <div class="breakpoint-content">
+                <div class="breakpoint-detail">
+                  <strong>Dispositivo:</strong>
+                  <span>Tablets landscape, laptops</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Uso:</strong>
+                  <span>Layout 3-4 colunas, full sidebar</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Query:</strong>
+                  <span>@media (min-width: 1024px)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <div class="breakpoint-name">xl (Extra Large)</div>
+                <div class="breakpoint-size">1280px</div>
+              </div>
+              <div class="breakpoint-content">
+                <div class="breakpoint-detail">
+                  <strong>Dispositivo:</strong>
+                  <span>Desktop padrão</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Uso:</strong>
+                  <span>Conteúdo max-width 1200px</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Query:</strong>
+                  <span>@media (min-width: 1280px)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <div class="breakpoint-name">2xl (2X Large)</div>
+                <div class="breakpoint-size">1536px</div>
+              </div>
+              <div class="breakpoint-content">
+                <div class="breakpoint-detail">
+                  <strong>Dispositivo:</strong>
+                  <span>Monitores ultrawide</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Uso:</strong>
+                  <span>Layout expansivo com muito espaço</span>
+                </div>
+                <div class="breakpoint-detail">
+                  <strong>Query:</strong>
+                  <span>@media (min-width: 1536px)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Container Sizes -->
+        <section id="container">
+          <h2>📦 Container Sizes</h2>
+          <p>Larguras máximas recomendadas por breakpoint para manter conteúdo legível.</p>
+          <div style="padding: var(--space-6); background: var(--vp-bg-secondary); border-radius: var(--radius-lg); margin: var(--space-8) 0; font-family: 'Roboto Mono', monospace; font-size: var(--text-sm);">
+            <div style="margin-bottom: var(--space-4); display: flex; justify-content: space-between;">
+              <span>Mobile:</span>
+              <span style="color: var(--vp-text-muted);">100% (full width - var(--space-4) padding)</span>
+            </div>
+            <div style="margin-bottom: var(--space-4); display: flex; justify-content: space-between;">
+              <span>Tablet (sm):</span>
+              <span style="color: var(--vp-text-muted);">600px</span>
+            </div>
+            <div style="margin-bottom: var(--space-4); display: flex; justify-content: space-between;">
+              <span>Desktop (md):</span>
+              <span style="color: var(--vp-text-muted);">900px</span>
+            </div>
+            <div style="margin-bottom: var(--space-4); display: flex; justify-content: space-between;">
+              <span>Large (lg):</span>
+              <span style="color: var(--vp-text-muted);">1200px</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span>XL+:</span>
+              <span style="color: var(--vp-text-muted);">1400px (com margens)</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Gaps -->
+        <section id="gaps">
+          <h2>⬌ Gap Scale (para grids e flex)</h2>
+          <p>Espaço entre itens em grids e flex layouts. Segue a mesma escala do spacing.</p>
+          <p style="font-size: var(--text-sm); color: var(--vp-text-muted); margin-bottom: var(--space-4); font-family: 'Roboto Mono', monospace;">gap: var(--space-4) → 16px entre items<br>gap: var(--space-6) → 24px entre items<br>gap: var(--space-8) → 32px entre items (padrão para seções)</p>
+        </section>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 Verifica PIX. Design System — Spacing & Layout.</p>
+    </footer>
+  </div>
+</body>
+</html>

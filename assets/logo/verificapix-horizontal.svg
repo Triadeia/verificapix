@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 128" role="img" aria-labelledby="title">
+  <title id="title">Logo horizontal Verifica Pix</title>
+  <rect x="12" y="12" width="104" height="104" rx="27" fill="#1E3A5F"/>
+  <path d="M35 63 55 83 94 42" fill="none" stroke="#47A558" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="142" y="79" fill="#1E3A5F" font-family="Sora, Arial, sans-serif" font-size="54" font-weight="700">Verifica</text>
+  <text x="352" y="79" fill="#47A558" font-family="Sora, Arial, sans-serif" font-size="54" font-weight="800">Pix</text>
+</svg>

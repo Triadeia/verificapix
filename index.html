@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verifica PIX — Brandbook & Design System. Sistema completo de design para validação inteligente de comprovantes Pix.">
+  <title>Verifica PIX — Brandbook & Design System</title>
+  <link rel="stylesheet" href="assets/css/verificapix-tokens.css">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .navbar {
+      background: var(--vp-navy);
+      padding: var(--space-6) var(--space-8);
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+      border-bottom: 1px solid rgba(71, 165, 88, 0.2);
+      flex-wrap: wrap;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: white;
+    }
+    .navbar-brand span {
+      color: var(--vp-green);
+    }
+    .navbar-symbol {
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+    }
+    .navbar-nav {
+      display: flex;
+      gap: var(--space-6);
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .navbar-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color var(--transition-fast);
+    }
+    .navbar-link:hover {
+      color: var(--vp-green);
+    }
+    .content {
+      flex: 1;
+      padding: var(--space-12) var(--space-8);
+      background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: var(--space-16);
+    }
+    .hero h1 {
+      font-size: var(--text-6xl);
+      font-weight: var(--weight-bold);
+      color: var(--vp-navy);
+      margin-bottom: var(--space-4);
+      line-height: 1.1;
+    }
+    .hero p {
+      font-size: var(--text-xl);
+      color: var(--vp-text-secondary);
+      max-width: 600px;
+      margin: 0 auto var(--space-8);
+    }
+    .cta-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-12);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-base);
+      transition: all var(--transition-fast);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--vp-green);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #3e9f6a;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--vp-navy);
+      border: 2px solid var(--vp-navy);
+    }
+    .btn-secondary:hover {
+      background: var(--vp-navy);
+      color: white;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+    .card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      border: 1px solid var(--vp-border-light);
+      transition: all var(--transition-fast);
+    }
+    .card:hover {
+      box-shadow: 0 8px 32px rgba(71, 165, 88, 0.1);
+      transform: translateY(-4px);
+    }
+    .card-icon {
+      font-size: 48px;
+      margin-bottom: var(--space-4);
+    }
+    .card-title {
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--vp-navy);
+      margin-bottom: var(--space-3);
+    }
+    .card-desc {
+      font-size: var(--text-sm);
+      color: var(--vp-text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: var(--space-4);
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--vp-green);
+      text-decoration: none;
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-sm);
+    }
+    .card-link:hover {
+      gap: var(--space-3);
+    }
+    .section-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--weight-bold);
+      color: var(--vp-navy);
+      margin-bottom: var(--space-8);
+      text-align: center;
+    }
+    .footer {
+      background: var(--vp-navy);
+      color: white;
+      padding: var(--space-8);
+      text-align: center;
+      font-size: var(--text-sm);
+      border-top: 1px solid rgba(71, 165, 88, 0.2);
+    }
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      .navbar-nav {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+      }
+      .hero h1 {
+        font-size: var(--text-4xl);
+      }
+      .cta-buttons {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">
+      <span class="navbar-symbol">✓</span>
+      <div>Verifica<span>PIX</span></div>
+    </a>
+    <div class="navbar-nav">
+      <a href="brand-strategy/" class="navbar-link">Estratégia</a>
+      <a href="voice/" class="navbar-link">Voz</a>
+      <a href="logo-usage/" class="navbar-link">Marca</a>
+      <a href="#documentacao" class="navbar-link">Documentação</a>
+      <a href="#design-system" class="navbar-link">Design System</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="container">
+      <!-- HERO -->
+      <div class="hero">
+        <h1>Verifica PIX</h1>
+        <p>Brandbook e Design System para a camada inteligente de análise que ajuda comerciantes a decidir antes de liberar o produto.</p>
+        <div class="cta-buttons">
+          <a href="guidelines/" class="btn btn-primary">Ver Guidelines</a>
+          <a href="#documentacao" class="btn btn-secondary">Explorar Design System</a>
+        </div>
+      </div>
+
+      <!-- DOCUMENTAÇÃO -->
+      <section id="documentacao">
+        <h2 class="section-title">Brandbook completo em HTML</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon">🎨</div>
+            <div class="card-title">Color Tokens</div>
+            <div class="card-desc">Palette completa com validação WCAG 2.1 AA. Cores primárias, semânticas, neutras e backgrounds.</div>
+            <a href="color-tokens/" class="card-link">Explorar →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🔤</div>
+            <div class="card-title">Typography</div>
+            <div class="card-desc">Escala de tipos, pesos, tamanhos e altura de linha. Francy para display, Roboto Mono para código.</div>
+            <a href="typography/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">📏</div>
+            <div class="card-title">Spacing & Layout</div>
+            <div class="card-desc">Grid system, escala de espaçamento, 5 breakpoints responsivos e container sizes.</div>
+            <a href="spacing-layout/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🎬</div>
+            <div class="card-title">Motion & Animation</div>
+            <div class="card-desc">Princípios de movimento, timing values, easing functions e padrões de animação.</div>
+            <a href="movimento/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🎴</div>
+            <div class="card-title">Components & Tables</div>
+            <div class="card-desc">Badges, botões, inputs, cards, alertas e componentes reutilizáveis. Tabelas responsivas.</div>
+            <a href="tables/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🎭</div>
+            <div class="card-title">Brand Guidelines</div>
+            <div class="card-desc">Essência, missão, valores, posicionamento, arquétipos, promessa e tone of voice.</div>
+            <a href="guidelines/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">◎</div>
+            <div class="card-title">Brand Strategy</div>
+            <div class="card-desc">ICP, posicionamento, mecanismo do problema, proposta de valor e arquitetura da oferta.</div>
+            <a href="brand-strategy/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">“ ”</div>
+            <div class="card-title">Voz da Marca</div>
+            <div class="card-desc">Tom, palavras aprovadas, microcopy de análise e mensagens comerciais.</div>
+            <a href="voice/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">V</div>
+            <div class="card-title">Logo & Uso</div>
+            <div class="card-desc">Versões SVG, área de respiro, tamanhos mínimos e usos incorretos.</div>
+            <a href="logo-usage/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">.org</div>
+            <div class="card-title">Domínios & Infraestrutura</div>
+            <div class="card-desc">Plano de presença digital, domínios, custos e arquitetura inicial.</div>
+            <a href="infraestrutura/" class="card-link">Ver →</a>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🏠</div>
+            <div class="card-title">Homepage</div>
+            <div class="card-desc">Landing page principal com hero section, componentes, brand strategy e logo documentation.</div>
+            <a href="./" class="card-link">Voltar →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESIGN SYSTEM OVERVIEW -->
+      <section id="design-system" style="margin-top: var(--space-16);">
+        <h2 class="section-title">⚙️ Design System Completo</h2>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <div class="card-title">Mobile-First Responsive</div>
+            <div class="card-desc">5 breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px).</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">♿</div>
+            <div class="card-title">WCAG 2.1 AA Compliant</div>
+            <div class="card-desc">Contraste validado (16.5:1 para texto), focus-visible, motion preferences.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🌙</div>
+            <div class="card-title">Dark Mode Support</div>
+            <div class="card-desc">Suporte completo via prefers-color-scheme. Tokens ajustados automaticamente.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-title">200+ CSS Tokens</div>
+            <div class="card-desc">Cores, tipografia, espaçamento, bordas, sombras, transições e z-index.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🔧</div>
+            <div class="card-title">Zero Dependencies</div>
+            <div class="card-desc">HTML5 semântico puro com CSS custom properties. Sem frameworks.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-icon">🚀</div>
+            <div class="card-title">Production-Ready</div>
+            <div class="card-desc">Componentes testados, documentados e prontos para implementação.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p style="margin: 0;">&copy; 2026 Verifica PIX — Design System & Brandbook. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html>
