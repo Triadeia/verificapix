@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biblioteca de componentes e estados operacionais do Verifica Pix.">
+  <title>Um sistema para decidir com clareza. | Verifica Pix</title>
+  <link rel="icon" href="../../assets/logo/verificapix-symbol.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/brandbook.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="docs-navigation" aria-label="Abrir navegação"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <a class="brand-link" href="../../" aria-label="Verifica Pix, página inicial">
+      <img src="../../assets/logo/verificapix-francy.png" alt="Verifica Pix">
+    </a>
+    <span class="header-divider" aria-hidden="true"></span>
+    <span class="header-label">Brandbook &amp; Design System</span>
+    <div class="header-actions">
+      <a class="top-link" href="../../guidelines/">Marca</a>
+      <a class="top-link" href="../../tables/">Produto</a>
+      <a class="button button-primary" href="../../logo-usage/">Baixar logos <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+  </header>
+  <div class="docs-layout">
+    <aside class="docs-sidebar" id="docs-navigation" aria-label="Navegação do brandbook">
+
+      <div class="nav-group">
+        <p class="nav-group-title">Marca</p>
+        <nav class="docs-nav">
+          <a href="../guidelines/"><span class="nav-dot"></span>Guidelines</a><a href="../brand-strategy/"><span class="nav-dot"></span>Estratégia</a><a href="../voice/"><span class="nav-dot"></span>Voz e mensagens</a><a href="../logo-usage/"><span class="nav-dot"></span>Logo e aplicação</a>
+        </nav>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-title">Fundamentos</p>
+        <nav class="docs-nav">
+          <a href="../color-tokens/"><span class="nav-dot"></span>Cores</a><a href="../typography/"><span class="nav-dot"></span>Tipografia</a><a href="../spacing-layout/"><span class="nav-dot"></span>Espaçamento e layout</a><a href="../movimento/"><span class="nav-dot"></span>Movimento</a>
+        </nav>
+      </div>
+      <div class="nav-group">
+        <p class="nav-group-title">Produto</p>
+        <nav class="docs-nav">
+          <a href="../components/" aria-current="page"><span class="nav-dot"></span>Componentes</a><a href="../tables/"><span class="nav-dot"></span>Tabelas</a><a href="../infraestrutura/"><span class="nav-dot"></span>Infraestrutura</a>
+        </nav>
+      </div>
+  </aside>
+    <main class="docs-main" id="conteudo">
+      <article class="docs-content">
+        <header class="page-intro reveal">
+          <span class="eyebrow">Biblioteca de produto</span>
+          <h1>Um sistema para decidir com clareza.</h1>
+          <p>Cada componente reduz ambiguidade entre evidência, interpretação e próxima ação. Cor reforça o significado, mas nunca trabalha sozinha.</p>
+        </header>
+
+      <section class="doc-section reveal"><div class="section-heading"><h2>Ações e controles</h2><p>O CTA principal descreve o resultado esperado. Controles secundários preservam contexto e nunca competem visualmente.</p></div>
+        <div class="component-showcase"><button class="button button-primary" type="button">Iniciar validação</button><button class="button button-secondary" type="button">Ver evidências</button><button class="button button-quiet" type="button">Cancelar</button><label class="field"><span>Identificador da transação</span><input type="text" value="E18236120..." aria-describedby="component-field-help"><small id="component-field-help">Use o identificador apresentado no comprovante.</small></label></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Estados operacionais</h2><p>Os estados cobrem análise concluída, evidência suspeita, resultado inconclusivo, processamento e falha técnica.</p></div>
+        <div class="status-grid"><article><span class="status status-low">Compatível</span><h3>Sem divergência relevante</h3><p>Confirme a liquidação na conta recebedora.</p></article><article><span class="status status-high">Suspeito</span><h3>Inconsistência relevante</h3><p>Interrompa a entrega e faça uma confirmação adicional.</p></article><article><span class="status status-inconclusive">Inconclusivo</span><h3>Evidência insuficiente</h3><p>Solicite uma imagem legível ou consulte outro canal.</p></article><article><span class="status status-processing">Processando</span><h3>Análise em andamento</h3><p>Mantenha a entrega em espera.</p></article><article><span class="status status-error">Erro</span><h3>Não foi possível analisar</h3><p>Tente novamente sem descartar a verificação manual.</p></article></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Cartões de evidência</h2><p>Informação observada, leitura do sistema e recomendação ficam visualmente separadas.</p></div>
+        <div class="evidence-card-grid"><article class="evidence-card"><small>Valor informado</small><strong>R$ 1.249,90</strong><span class="status status-low">Compatível</span></article><article class="evidence-card"><small>Beneficiário</small><strong>Loja Exemplo Ltda.</strong><span class="status status-low">Compatível</span></article><article class="evidence-card"><small>Identificador</small><strong>E18236120...</strong><span class="status status-attention">Revisar</span></article></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Princípios de implementação</h2><p>A biblioteca segue contratos simples para permanecer acessível e reutilizável.</p></div>
+        <ul class="rule-list"><li>Foco visível em todos os controles interativos</li><li>Estados comunicados com texto, ícone e cor</li><li>Áreas de toque com pelo menos 44px</li><li>Movimento reduzido respeitado pelo sistema operacional</li><li>Mensagens sem garantia de liquidação bancária</li></ul>
+      </section>
+      </article>
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <img src="../../assets/logo/verificapix-francy-white.png" alt="Verifica Pix">
+      <p>Brandbook digital, versão 2.0. Confirme sempre a liquidação na conta bancária recebedora.</p>
+    </div>
+  </footer>
+  <script src="../../assets/js/main.js"></script>
+</body>
+</html>

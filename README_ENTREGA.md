@@ -1,18 +1,34 @@
-# Entrega Brandbook Verifica Pix
+# Entrega Verifica Pix
 
-## Abrir diretamente
+## Abrir localmente
 
-Abra `index.html` no navegador.
-
-## Servir localmente
-
-No Terminal:
+Na raiz do projeto:
 
 ```bash
-cd "/Volumes/SSD-Nilton/[01] VERIFICA PIX /[01] Branding Book - Verifica Pix /ENTREGA_BRANDBOOK_VERIFICAPIX_HTML"
-python3 -m http.server 8080
+python3 -m http.server 8000
 ```
 
-Depois acesse `http://localhost:8080`.
+Abra `http://localhost:8000/`.
 
-O projeto usa HTML, CSS, JavaScript mínimo, SVG e PNG. Não requer instalação.
+## Páginas principais
+
+- `index.html`
+- `brandbook/guidelines/index.html`
+- `brandbook/color-tokens/index.html`
+- `brandbook/typography/index.html`
+- `brandbook/spacing-layout/index.html`
+- `brandbook/movimento/index.html`
+- `brandbook/tables/index.html`
+- `brandbook/voice/index.html`
+- `brandbook/components/index.html`
+- `brandbook/brand-strategy/index.html`
+
+As rotas anteriores na raiz foram preservadas para compatibilidade.
+
+## Reconstruir HTML
+
+```bash
+node scripts/build-brandbook.mjs
+```
+
+Publicação: `https://triadeia.github.io/verificapix/`

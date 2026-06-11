@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,7 +19,8 @@ const navGroups = [
     ["movimento", "Movimento"],
   ]],
   ["Produto", [
-    ["tables", "Componentes e tabelas"],
+    ["components", "Componentes"],
+    ["tables", "Tabelas"],
     ["infraestrutura", "Infraestrutura"],
   ]],
 ];
@@ -76,8 +77,11 @@ function footer(root) {
   </footer>`;
 }
 
-function docPage({ slug, title, description, eyebrow, intro, content }) {
-  const root = "../";
+function docPage({ slug, title, description, eyebrow, intro, content }, nested = false) {
+  const root = nested ? "../../" : "../";
+  const resolvedContent = nested
+    ? content.replaceAll('src="../assets/', 'src="../../assets/')
+    : content;
   return `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -86,7 +90,7 @@ function docPage({ slug, title, description, eyebrow, intro, content }) {
   <meta name="description" content="${description}">
   <title>${title} | Verifica Pix</title>
   <link rel="icon" href="${root}assets/logo/verificapix-symbol.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="${root}assets/css/brandbook-pages.css">
+  <link rel="stylesheet" href="${root}assets/css/brandbook.css">
 </head>
 <body>
   ${header(root)}
@@ -99,12 +103,12 @@ function docPage({ slug, title, description, eyebrow, intro, content }) {
           <h1>${title}</h1>
           <p>${intro}</p>
         </header>
-        ${content}
+        ${resolvedContent}
       </article>
     </main>
   </div>
   ${footer(root)}
-  <script src="${root}assets/js/brandbook.js"></script>
+  <script src="${root}assets/js/main.js"></script>
 </body>
 </html>`;
 }
@@ -259,6 +263,26 @@ const pages = [
       <section class="doc-section reveal"><div class="section-heading"><h2>Acessibilidade</h2><p>O conteúdo nunca depende da animação para ser compreendido.</p></div><div class="callout">${icon("info")}<p>Com <code>prefers-reduced-motion: reduce</code>, durações são praticamente zeradas e a rolagem suave é desativada.</p></div></section>`
   },
   {
+    slug: "components",
+    title: "Um sistema para decidir com clareza.",
+    description: "Biblioteca de componentes e estados operacionais do Verifica Pix.",
+    eyebrow: "Biblioteca de produto",
+    intro: "Cada componente reduz ambiguidade entre evidência, interpretação e próxima ação. Cor reforça o significado, mas nunca trabalha sozinha.",
+    content: `
+      <section class="doc-section reveal"><div class="section-heading"><h2>Ações e controles</h2><p>O CTA principal descreve o resultado esperado. Controles secundários preservam contexto e nunca competem visualmente.</p></div>
+        <div class="component-showcase"><button class="button button-primary" type="button">Iniciar validação</button><button class="button button-secondary" type="button">Ver evidências</button><button class="button button-quiet" type="button">Cancelar</button><label class="field"><span>Identificador da transação</span><input type="text" value="E18236120..." aria-describedby="component-field-help"><small id="component-field-help">Use o identificador apresentado no comprovante.</small></label></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Estados operacionais</h2><p>Os estados cobrem análise concluída, evidência suspeita, resultado inconclusivo, processamento e falha técnica.</p></div>
+        <div class="status-grid"><article><span class="status status-low">Compatível</span><h3>Sem divergência relevante</h3><p>Confirme a liquidação na conta recebedora.</p></article><article><span class="status status-high">Suspeito</span><h3>Inconsistência relevante</h3><p>Interrompa a entrega e faça uma confirmação adicional.</p></article><article><span class="status status-inconclusive">Inconclusivo</span><h3>Evidência insuficiente</h3><p>Solicite uma imagem legível ou consulte outro canal.</p></article><article><span class="status status-processing">Processando</span><h3>Análise em andamento</h3><p>Mantenha a entrega em espera.</p></article><article><span class="status status-error">Erro</span><h3>Não foi possível analisar</h3><p>Tente novamente sem descartar a verificação manual.</p></article></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Cartões de evidência</h2><p>Informação observada, leitura do sistema e recomendação ficam visualmente separadas.</p></div>
+        <div class="evidence-card-grid"><article class="evidence-card"><small>Valor informado</small><strong>R$ 1.249,90</strong><span class="status status-low">Compatível</span></article><article class="evidence-card"><small>Beneficiário</small><strong>Loja Exemplo Ltda.</strong><span class="status status-low">Compatível</span></article><article class="evidence-card"><small>Identificador</small><strong>E18236120...</strong><span class="status status-attention">Revisar</span></article></div>
+      </section>
+      <section class="doc-section reveal"><div class="section-heading"><h2>Princípios de implementação</h2><p>A biblioteca segue contratos simples para permanecer acessível e reutilizável.</p></div>
+        <ul class="rule-list"><li>Foco visível em todos os controles interativos</li><li>Estados comunicados com texto, ícone e cor</li><li>Áreas de toque com pelo menos 44px</li><li>Movimento reduzido respeitado pelo sistema operacional</li><li>Mensagens sem garantia de liquidação bancária</li></ul>
+      </section>`
+  },
+  {
     slug: "tables",
     title: "Componentes para evidências.",
     description: "Componentes, estados, botões e tabelas do produto Verifica Pix.",
@@ -308,7 +332,7 @@ function homePage() {
   <meta name="description" content="Verifica Pix organiza evidências de comprovantes Pix e orienta uma decisão mais clara antes de liberar o produto.">
   <title>Verifica Pix | Antes de liberar, verifique</title>
   <link rel="icon" href="assets/logo/verificapix-symbol.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/brandbook-pages.css">
+  <link rel="stylesheet" href="assets/css/brandbook.css">
 </head>
 <body class="landing-body">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -328,9 +352,9 @@ function homePage() {
     <section class="landing-hero">
       <div class="landing-hero-grid">
         <div class="landing-hero-copy reveal">
-          <span class="landing-kicker">Análise de comprovantes para sua operação</span>
-          <h1>Seu caixa decide com <span>contexto.</span></h1>
-          <p>Organize evidências, identifique inconsistências e oriente a equipe antes de liberar o produto.</p>
+          <span class="landing-kicker">Validação de Lastro direto pelo WhatsApp</span>
+          <h1>Saia da Ilusão de Comprovante. Decida com <span>contexto.</span></h1>
+          <p>Envie o comprovante pelo WhatsApp, organize evidências e oriente a equipe antes de liberar o produto.</p>
           <div class="landing-actions"><a class="landing-button landing-button-green" href="#como-funciona">Ver como funciona ${icon("arrow")}</a><a class="landing-button landing-button-ghost" href="tables/">Explorar a interface</a></div>
           <div class="landing-steps"><span>Receba a evidência</span><span>Compare os sinais</span><span>Registre a decisão</span></div>
         </div>
@@ -352,7 +376,7 @@ function homePage() {
 
     <section class="landing-section feature-section" id="como-funciona">
       <div class="feature-grid">
-        <div class="feature-copy reveal"><span class="section-tag">Entrada simples</span><h2>Receba o comprovante e comece pelo que é visível.</h2><p>O Verifica Pix organiza as informações disponíveis em uma única análise. A equipe não precisa improvisar uma conferência diferente a cada atendimento.</p><ul class="check-list"><li>Valor, data e horário reunidos</li><li>Beneficiário apresentado com clareza</li><li>Identificador destacado para revisão</li></ul></div>
+        <div class="feature-copy reveal"><span class="section-tag">WhatsApp como porta de entrada</span><h2>Receba o comprovante e comece pelo que é visível.</h2><p>O Verifica Pix organiza as informações enviadas pelo WhatsApp em uma única análise. A equipe não precisa improvisar uma conferência diferente a cada atendimento.</p><ul class="check-list"><li>Valor, data e horário reunidos</li><li>Beneficiário apresentado com clareza</li><li>Identificador destacado para revisão</li></ul></div>
         <div class="upload-demo reveal"><div class="upload-head"><span>Nova análise</span><span class="status status-neutral">Caixa 02</span></div><div class="upload-drop"><img src="assets/logo/verificapix-symbol.svg" alt=""><strong>Comprovante recebido</strong><span>Imagem pronta para análise</span></div><div class="upload-progress"><span></span></div><div class="upload-meta"><div><small>Origem</small><strong>Atendimento presencial</strong></div><div><small>Responsável</small><strong>Marina</strong></div></div></div>
       </div>
     </section>
@@ -360,7 +384,7 @@ function homePage() {
     <section class="landing-section feature-section feature-alt" id="analise">
       <div class="feature-grid feature-reverse">
         <div class="evidence-demo reveal"><div class="evidence-demo-head"><div><small>Análise VP-48291</small><strong>Evidências encontradas</strong></div><span class="status status-attention">Atenção</span></div><div class="evidence-check"><span class="signal-dot low"></span><div><strong>Valor</strong><small>Compatível com a venda</small></div><b>R$ 1.249,90</b></div><div class="evidence-check"><span class="signal-dot low"></span><div><strong>Beneficiário</strong><small>Nome esperado</small></div><b>Compatível</b></div><div class="evidence-check"><span class="signal-dot attention"></span><div><strong>Identificador</strong><small>Exige confirmação adicional</small></div><b>Revisar</b></div><div class="decision-footer"><span>Próxima ação</span><strong>Confirmar na conta recebedora</strong></div></div>
-        <div class="feature-copy reveal"><span class="section-tag">Leitura orientada</span><h2>Compare sinais sem transformar hipótese em certeza.</h2><p>Cada evidência aparece separada da interpretação. Assim, o operador entende o que foi encontrado e por que uma ação adicional pode ser necessária.</p><ul class="check-list"><li>Estados com texto, não apenas cor</li><li>Inconsistências explicadas em linguagem direta</li><li>Limites técnicos sempre visíveis</li></ul></div>
+        <div class="feature-copy reveal"><span class="section-tag">Mecanismo: Validação de Lastro</span><h2>Compare sinais sem transformar hipótese em certeza.</h2><p>Cada evidência aparece separada da interpretação. Assim, o operador entende o que foi encontrado e por que uma ação adicional pode ser necessária.</p><ul class="check-list"><li>Estados com texto, não apenas cor</li><li>Inconsistências explicadas em linguagem direta</li><li>Limites técnicos sempre visíveis</li></ul></div>
       </div>
     </section>
 
@@ -415,11 +439,16 @@ function homePage() {
     </div></div></section>
   </main>
   <footer class="landing-footer"><div class="landing-footer-main"><div><img src="assets/logo/verificapix-francy-white.png" alt="Verifica Pix"><p>Uma camada de confiança operacional entre o comprovante e a entrega.</p></div><nav><strong>Produto</strong><a href="#como-funciona">Como funciona</a><a href="#analise">Análise</a><a href="#operacao">Operação</a></nav><nav><strong>Brandbook</strong><a href="guidelines/">Guidelines</a><a href="logo-usage/">Logo</a><a href="voice/">Voz</a></nav><div><strong>Princípio central</strong><p>Confirme sempre a liquidação na conta bancária recebedora.</p></div></div><div class="landing-footer-bottom"><span>© 2026 Verifica Pix</span><span>Brandbook digital e demonstração de produto</span></div></footer>
-  <script src="assets/js/brandbook.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>`;
 }
 
 await writeFile(resolve(project, "index.html"), clean(homePage()));
-await Promise.all(pages.map((page) => writeFile(resolve(project, page.slug, "index.html"), clean(docPage(page)))));
-console.log(`Built ${pages.length + 1} HTML pages.`);
+await Promise.all(pages.flatMap((page) => [
+  mkdir(resolve(project, page.slug), { recursive: true })
+    .then(() => writeFile(resolve(project, page.slug, "index.html"), clean(docPage(page)))),
+  mkdir(resolve(project, "brandbook", page.slug), { recursive: true })
+    .then(() => writeFile(resolve(project, "brandbook", page.slug, "index.html"), clean(docPage(page, true)))),
+]));
+console.log(`Built ${pages.length * 2 + 1} HTML pages.`);

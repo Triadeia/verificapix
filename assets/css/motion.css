@@ -1,0 +1,32 @@
+@keyframes vp-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes vp-pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.65 0.16 145 / 0); }
+  50% { box-shadow: 0 0 0 8px oklch(0.65 0.16 145 / 0.12); }
+}
+
+.floating-signal {
+  animation: vp-float 5.5s ease-in-out infinite;
+}
+
+.signal-two {
+  animation-delay: -2.4s;
+}
+
+.status-processing {
+  animation: vp-pulse-soft 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

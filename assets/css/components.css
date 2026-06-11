@@ -1,0 +1,118 @@
+.component-showcase {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--vp-surface);
+  border: 1px solid var(--vp-line);
+  border-radius: var(--radius-xl);
+}
+
+.button-quiet {
+  color: var(--vp-navy-700);
+  background: transparent;
+}
+
+.field {
+  display: grid;
+  width: min(100%, 390px);
+  gap: var(--space-2);
+  margin-left: auto;
+  color: var(--vp-navy-900);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.field input {
+  min-height: 48px;
+  padding: 0 var(--space-4);
+  color: var(--vp-navy-950);
+  background: var(--vp-paper);
+  border: 1px solid var(--vp-line-strong);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+
+.field small {
+  color: var(--vp-muted);
+  font-weight: 500;
+}
+
+.field input:focus-visible,
+.button:focus-visible,
+.copy-button:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus-ring);
+}
+
+.status-grid,
+.evidence-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.status-grid article,
+.evidence-card {
+  padding: var(--space-6);
+  background: var(--vp-surface);
+  border: 1px solid var(--vp-line);
+  border-radius: var(--radius-lg);
+}
+
+.status-grid h3 {
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.status-grid p {
+  margin: 0;
+  color: var(--vp-muted);
+}
+
+.status-inconclusive {
+  color: oklch(0.42 0.08 275);
+  background: oklch(0.95 0.025 275);
+}
+
+.status-processing {
+  color: oklch(0.43 0.09 230);
+  background: oklch(0.95 0.025 230);
+}
+
+.status-error {
+  color: oklch(0.43 0.17 28);
+  background: oklch(0.95 0.035 28);
+}
+
+.evidence-card {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3);
+}
+
+.evidence-card small {
+  color: var(--vp-muted);
+  font-weight: 700;
+}
+
+.evidence-card strong {
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+}
+
+.evidence-card .status {
+  width: fit-content;
+}
+
+@media (max-width: 840px) {
+  .status-grid,
+  .evidence-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field {
+    margin-left: 0;
+  }
+}

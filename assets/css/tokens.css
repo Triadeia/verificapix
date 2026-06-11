@@ -1,0 +1,13 @@
+@import url("./verificapix-tokens.css");
+
+:root {
+  --color-brand: var(--vp-green-600);
+  --color-brand-strong: var(--vp-green-700);
+  --color-ink: var(--vp-navy-950);
+  --color-surface: var(--vp-surface);
+  --color-canvas: var(--vp-paper);
+  --color-border: var(--vp-line);
+  --focus-ring: 0 0 0 3px oklch(0.76 0.14 145 / 0.35);
+  --glass-blur: 22px;
+  --glass-border: oklch(0.92 0.018 145 / 0.18);
+}
