@@ -284,44 +284,137 @@ const pages = [
 ];
 
 function homePage() {
-  const systemLinks = [
-    ["01", "Guidelines", "Essência, missão e princípios", "guidelines"],
-    ["02", "Estratégia", "ICP, problema e proposta de valor", "brand-strategy"],
-    ["03", "Voz", "Mensagens de análise e microcopy", "voice"],
-    ["04", "Logo", "Assinatura Francy e V da locomarca", "logo-usage"],
-    ["05", "Cores", "Tokens e semântica de risco", "color-tokens"],
-    ["06", "Tipografia", "Hierarquia e famílias", "typography"],
-    ["07", "Layout", "Espaçamento e responsividade", "spacing-layout"],
-    ["08", "Componentes", "Interface real do produto", "tables"],
+  const capabilities = [
+    ["Receber", "comprovantes"],
+    ["Comparar", "evidências"],
+    ["Classificar", "risco aparente"],
+    ["Orientar", "a próxima ação"],
+    ["Registrar", "a decisão"],
+    ["Acompanhar", "a operação"],
+  ];
+  const useCases = [
+    ["01", "Conferir beneficiário", "Compare o nome informado com o contexto da venda."],
+    ["02", "Revisar identificador", "Encontre sinais que merecem confirmação adicional."],
+    ["03", "Checar valor e horário", "Organize dados básicos antes de liberar o produto."],
+    ["04", "Padronizar o caixa", "Dê à equipe um processo comum para seguir."],
+    ["05", "Acionar o responsável", "Leve casos de atenção para quem pode decidir."],
+    ["06", "Registrar a análise", "Mantenha o histórico do que foi visto e decidido."],
   ];
   return `<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Brandbook e Design System do Verifica Pix. Marca, produto, componentes e padrões para decisões mais seguras antes da entrega.">
-  <title>Verifica Pix | Brandbook &amp; Design System</title>
+  <meta name="description" content="Verifica Pix organiza evidências de comprovantes Pix e orienta uma decisão mais clara antes de liberar o produto.">
+  <title>Verifica Pix | Antes de liberar, verifique</title>
   <link rel="icon" href="assets/logo/verificapix-symbol.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/brandbook-pages.css">
 </head>
-<body class="home-body">
-  ${header("", false)}
-  <main class="home-main" id="conteudo">
-    <section class="home-hero">
-      <div class="hero-grid">
-        <div class="hero-copy reveal"><span class="eyebrow">Brandbook digital 2.0</span><h1>Veja antes de <span>liberar.</span></h1><p>Um sistema de marca e produto para transformar comprovantes Pix em decisões operacionais mais claras.</p><div class="hero-actions"><a class="button button-primary" href="guidelines/">Explorar o brandbook ${icon("arrow")}</a><a class="button button-secondary" href="tables/">Ver a interface</a></div><p class="hero-note">Análise de evidências. Confirmação final sempre na conta recebedora.</p></div>
-        <div class="hero-product reveal">${productWindow}</div>
+<body class="landing-body">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="marketing-header">
+    <a class="marketing-brand" href="#" aria-label="Verifica Pix, início"><img src="assets/logo/verificapix-francy-white.png" alt="Verifica Pix"></a>
+    <nav class="marketing-nav" aria-label="Navegação principal">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#analise">Análise</a>
+      <a href="#operacao">Operação</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="guidelines/">Brandbook</a>
+    </nav>
+    <a class="marketing-cta" href="#como-funciona">Conhecer o Verifica Pix ${icon("arrow")}</a>
+    <a class="marketing-menu" href="#como-funciona" aria-label="Ir para como funciona">${icon("menu")}</a>
+  </header>
+  <main class="landing-main" id="conteudo">
+    <section class="landing-hero">
+      <div class="landing-hero-grid">
+        <div class="landing-hero-copy reveal">
+          <span class="landing-kicker">Análise de comprovantes para sua operação</span>
+          <h1>Seu caixa decide com <span>contexto.</span></h1>
+          <p>Organize evidências, identifique inconsistências e oriente a equipe antes de liberar o produto.</p>
+          <div class="landing-actions"><a class="landing-button landing-button-green" href="#como-funciona">Ver como funciona ${icon("arrow")}</a><a class="landing-button landing-button-ghost" href="tables/">Explorar a interface</a></div>
+          <div class="landing-steps"><span>Receba a evidência</span><span>Compare os sinais</span><span>Registre a decisão</span></div>
+        </div>
+        <div class="phone-stage reveal" aria-label="Demonstração do fluxo de análise">
+          <div class="phone-orbit orbit-one"></div><div class="phone-orbit orbit-two"></div>
+          <div class="phone-frame">
+            <div class="phone-top"><span>14:32</span><strong>Verifica Pix</strong><span>online</span></div>
+            <div class="chat-day">Hoje</div>
+            <div class="chat-bubble chat-user"><span>Comprovante recebido no Caixa 02</span><small>14:32</small></div>
+            <div class="receipt-mini"><div><span>Valor</span><strong>R$ 1.249,90</strong></div><div><span>Beneficiário</span><strong>Loja Exemplo Ltda.</strong></div><div><span>ID</span><strong>E18236120...</strong></div></div>
+            <div class="chat-bubble chat-system"><span class="status status-attention">Atenção</span><strong>O identificador precisa de revisão.</strong><p>Compare com a transação na conta recebedora antes de liberar.</p><small>14:32</small></div>
+          </div>
+          <div class="floating-signal signal-one"><span class="signal-dot low"></span><div><small>Beneficiário</small><strong>Compatível</strong></div></div>
+          <div class="floating-signal signal-two"><span class="signal-dot attention"></span><div><small>Identificador</small><strong>Revisar</strong></div></div>
+        </div>
       </div>
     </section>
-    <section class="proof-strip"><div class="proof-inner"><p>Uma linguagem comum para toda a operação</p><div class="proof-roles"><span>Donos</span><span>Caixas</span><span>Operações</span><span>Produto</span><span>Parceiros</span></div></div></section>
-    <section class="home-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Da dúvida ao próximo passo.</h2><p>O Verifica Pix não tenta parecer um banco. Ele organiza o que está visível, mostra o que merece atenção e orienta uma confirmação responsável.</p></div>
-      <div class="story-steps"><article class="story-step reveal"><span>01</span><h3>Receba a evidência</h3><p>O comprovante chega ao caixa e entra em um fluxo comum, sem depender apenas da experiência de uma pessoa.</p></article><article class="story-step reveal"><span>02</span><h3>Compare os sinais</h3><p>Valor, beneficiário, identificador, horário e coerência visual ficam organizados para revisão.</p></article><article class="story-step reveal"><span>03</span><h3>Decida com contexto</h3><p>O sistema comunica risco aparente e indica a próxima ação, incluindo a confirmação no banco recebedor.</p></article></div>
-    </div></section>
-    <section class="home-section" id="sistema" style="background:var(--vp-surface)"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Uma marca pronta para produto.</h2><p>O brandbook conecta estratégia, linguagem e componentes. Cada regra mostra como a identidade funciona em situações reais.</p></div><div class="system-index reveal">${systemLinks.map(([n,t,d,s])=>`<a class="system-link" href="${s}/"><span>${n}</span><strong>${t}</strong><p>${d}</p></a>`).join("")}</div></div></section>
-    <section class="home-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>O produto é a principal imagem da marca.</h2><p>Em vez de promessas abstratas, mostramos a interface, os critérios e os limites que sustentam a confiança.</p></div><div class="split"><div class="receipt reveal"><strong>COMPROVANTE PIX</strong><hr class="receipt-rule"><div class="receipt-row"><span>Valor</span><strong>R$ 1.249,90</strong></div><div class="receipt-row"><span>Data</span><span>10/06/2026 14:32</span></div><div class="receipt-row"><span>Beneficiário</span><span>Loja Exemplo Ltda.</span></div><hr class="receipt-rule"><span class="status status-attention">Revisão necessária</span></div><div class="surface surface-dark reveal"><span class="label" style="color:var(--vp-green-200)">Resultado</span><h2 style="font-size:var(--text-3xl)">Um sinal claro. Uma ação responsável.</h2><p>O identificador precisa ser comparado com a transação na conta recebedora antes de liberar o produto.</p><a class="button button-primary" href="voice/">Conhecer a linguagem ${icon("arrow")}</a></div></div></div></section>
-    <section class="home-section cta-section"><div class="home-section-inner"><div class="home-section-heading reveal"><h2>Antes de liberar, verifique.</h2><div><p>Use este sistema como fonte oficial para marca, produto, conteúdo e implementação.</p><a class="button button-primary" href="logo-usage/">Acessar arquivos da marca ${icon("arrow")}</a></div></div></div></section>
+    <section class="capability-ticker" aria-label="Capacidades do Verifica Pix"><div class="ticker-track">${[...capabilities,...capabilities].map(([verb,noun])=>`<span><strong>${verb}</strong> ${noun}<i></i></span>`).join("")}</div></section>
+
+    <section class="landing-section feature-section" id="como-funciona">
+      <div class="feature-grid">
+        <div class="feature-copy reveal"><span class="section-tag">Entrada simples</span><h2>Receba o comprovante e comece pelo que é visível.</h2><p>O Verifica Pix organiza as informações disponíveis em uma única análise. A equipe não precisa improvisar uma conferência diferente a cada atendimento.</p><ul class="check-list"><li>Valor, data e horário reunidos</li><li>Beneficiário apresentado com clareza</li><li>Identificador destacado para revisão</li></ul></div>
+        <div class="upload-demo reveal"><div class="upload-head"><span>Nova análise</span><span class="status status-neutral">Caixa 02</span></div><div class="upload-drop"><img src="assets/logo/verificapix-symbol.svg" alt=""><strong>Comprovante recebido</strong><span>Imagem pronta para análise</span></div><div class="upload-progress"><span></span></div><div class="upload-meta"><div><small>Origem</small><strong>Atendimento presencial</strong></div><div><small>Responsável</small><strong>Marina</strong></div></div></div>
+      </div>
+    </section>
+
+    <section class="landing-section feature-section feature-alt" id="analise">
+      <div class="feature-grid feature-reverse">
+        <div class="evidence-demo reveal"><div class="evidence-demo-head"><div><small>Análise VP-48291</small><strong>Evidências encontradas</strong></div><span class="status status-attention">Atenção</span></div><div class="evidence-check"><span class="signal-dot low"></span><div><strong>Valor</strong><small>Compatível com a venda</small></div><b>R$ 1.249,90</b></div><div class="evidence-check"><span class="signal-dot low"></span><div><strong>Beneficiário</strong><small>Nome esperado</small></div><b>Compatível</b></div><div class="evidence-check"><span class="signal-dot attention"></span><div><strong>Identificador</strong><small>Exige confirmação adicional</small></div><b>Revisar</b></div><div class="decision-footer"><span>Próxima ação</span><strong>Confirmar na conta recebedora</strong></div></div>
+        <div class="feature-copy reveal"><span class="section-tag">Leitura orientada</span><h2>Compare sinais sem transformar hipótese em certeza.</h2><p>Cada evidência aparece separada da interpretação. Assim, o operador entende o que foi encontrado e por que uma ação adicional pode ser necessária.</p><ul class="check-list"><li>Estados com texto, não apenas cor</li><li>Inconsistências explicadas em linguagem direta</li><li>Limites técnicos sempre visíveis</li></ul></div>
+      </div>
+    </section>
+
+    <section class="landing-statement"><div class="statement-inner reveal"><span>Decisão operacional</span><h2>Seu caixa sob controle, mesmo quando você não está lá.</h2><p>Um processo comum conecta quem atende, quem revisa e quem assume a decisão final.</p><a class="landing-button landing-button-light" href="#operacao">Ver a operação ${icon("arrow")}</a></div></section>
+
+    <section class="risk-section">
+      <div class="risk-inner">
+        <div class="risk-heading reveal"><span class="section-tag section-tag-dark">Risco aparente</span><h2>Três estados. Nenhuma promessa absoluta.</h2><p>O resultado orienta a operação a partir das evidências disponíveis. A liquidação final continua sendo confirmada no banco recebedor.</p></div>
+        <div class="risk-board reveal">
+          <div class="risk-card risk-low"><span class="risk-index">01</span><span class="status status-low">Baixo risco aparente</span><h3>Nenhuma inconsistência relevante encontrada.</h3><p>Confirme o crédito antes de liberar.</p></div>
+          <div class="risk-card risk-attention"><span class="risk-index">02</span><span class="status status-attention">Atenção</span><h3>Alguns dados precisam de revisão.</h3><p>Compare as evidências destacadas.</p></div>
+          <div class="risk-card risk-high"><span class="risk-index">03</span><span class="status status-high">Alto risco aparente</span><h3>Há inconsistências relevantes.</h3><p>Interrompa a entrega e confirme por outro canal.</p></div>
+        </div>
+        <div class="audit-demo reveal"><div class="audit-side"><img src="assets/logo/verificapix-symbol-white.svg" alt=""><strong>Linha da análise</strong><small>VP-48291</small></div><ol><li class="done"><span>14:32</span><div><strong>Comprovante recebido</strong><small>Marina · Caixa 02</small></div></li><li class="done"><span>14:32</span><div><strong>Dados organizados</strong><small>Valor e beneficiário compatíveis</small></div></li><li class="attention"><span>14:33</span><div><strong>Revisão solicitada</strong><small>Identificador enviado ao responsável</small></div></li><li><span>Agora</span><div><strong>Aguardando decisão</strong><small>Confirmação na conta recebedora</small></div></li></ol></div>
+      </div>
+    </section>
+
+    <section class="landing-section team-section" id="operacao">
+      <div class="feature-grid">
+        <div class="feature-copy reveal"><span class="section-tag">Operação conectada</span><h2>Todos seguem o mesmo processo. Cada pessoa vê o que precisa.</h2><p>O operador registra a análise. O responsável revisa os casos de atenção. O dono acompanha o histórico sem depender de mensagens dispersas.</p><a class="text-link" href="brand-strategy/">Conhecer o cliente ideal ${icon("arrow")}</a></div>
+        <div class="team-demo reveal"><div class="team-rings"><span class="avatar avatar-owner">D</span><span class="avatar avatar-cashier">M</span><span class="avatar avatar-ops">O</span><i></i></div><div class="team-row"><span class="avatar avatar-cashier">M</span><div><strong>Marina enviou uma análise</strong><small>Caixa 02 · agora</small></div><span class="status status-attention">Atenção</span></div><div class="team-row"><span class="avatar avatar-owner">D</span><div><strong>Daniel assumiu a revisão</strong><small>Responsável · agora</small></div><span class="status status-neutral">Em análise</span></div><div class="team-row"><span class="avatar avatar-ops">O</span><div><strong>Operação registrou a decisão</strong><small>Histórico atualizado</small></div><span class="status status-low">Concluído</span></div></div>
+      </div>
+    </section>
+
+    <section class="usecase-section">
+      <div class="usecase-inner"><div class="usecase-heading reveal"><span class="section-tag">O seu jeito de operar</span><h2>Não existe uma única conferência. Existe um processo que não deixa sinais importantes para trás.</h2><p>Comece pela necessidade do atendimento e avance até uma decisão rastreável.</p></div><div class="usecase-grid reveal">${useCases.map(([n,t,d])=>`<article><span>${n}</span><h3>${t}</h3><p>${d}</p></article>`).join("")}</div></div>
+    </section>
+
+    <section class="workflow-section">
+      <div class="workflow-inner">
+        <div class="workflow-heading reveal"><span>Fluxo de verificação</span><h2>Do comprovante à decisão, sem perder o contexto no caminho.</h2></div>
+        <div class="workflow-grid">
+          <div class="workflow-demo reveal"><div class="workflow-column"><small>Recebido</small><article><span class="status status-neutral">Novo</span><strong>VP-48291</strong><p>R$ 1.249,90</p></article></div><div class="workflow-column"><small>Em revisão</small><article><span class="status status-attention">Atenção</span><strong>Identificador</strong><p>Confirmação necessária</p></article></div><div class="workflow-column"><small>Decidido</small><article><span class="status status-low">Registrado</span><strong>Entrega liberada</strong><p>Crédito confirmado</p></article></div></div>
+          <div class="workflow-copy reveal"><h3>Uma visão para o momento. Outra para a gestão.</h3><p>No atendimento, a prioridade é saber o que fazer agora. Na gestão, importa entender volume, recorrência e onde o processo precisa melhorar.</p><ul class="check-list check-list-light"><li>Fila de análises pendentes</li><li>Responsável por cada decisão</li><li>Histórico de evidências e ações</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-section source-section">
+      <div class="source-heading reveal"><span class="section-tag">Fonte única</span><h2>Marca, linguagem e produto na mesma direção.</h2><p>O brandbook digital documenta como o Verifica Pix deve parecer, falar e se comportar em cada ponto da experiência.</p></div>
+      <div class="source-links reveal"><a href="guidelines/"><span>01</span><strong>Marca</strong><p>Essência e princípios</p></a><a href="voice/"><span>02</span><strong>Voz</strong><p>Mensagens e limites</p></a><a href="color-tokens/"><span>03</span><strong>Design</strong><p>Tokens e fundamentos</p></a><a href="tables/"><span>04</span><strong>Produto</strong><p>Componentes operacionais</p></a></div>
+    </section>
+
+    <section class="access-section"><div class="access-card reveal"><div><span class="section-tag">Conheça o projeto</span><h2>Antes de liberar o produto, verifique o Pix.</h2><p>Explore a estratégia, a interface e os padrões que sustentam o Verifica Pix.</p><div class="access-actions"><a class="landing-button landing-button-green" href="tables/">Ver o produto ${icon("arrow")}</a><a class="landing-button landing-button-outline" href="guidelines/">Abrir o brandbook</a></div></div><div class="access-symbol"><img src="assets/logo/verificapix-symbol.svg" alt="Símbolo Verifica Pix"><span>Você não fica sozinho na decisão.</span></div></div></section>
+
+    <section class="faq-section" id="faq"><div class="faq-inner"><div class="faq-heading reveal"><span>Dúvidas importantes</span><h2>Perguntas frequentes</h2><p>O que a análise faz, o que ela não faz e como comunicar seus resultados.</p></div><div class="faq-list reveal">
+      <details><summary>O Verifica Pix confirma que o dinheiro entrou?</summary><p>Não. A análise organiza e compara evidências do comprovante. A confirmação de liquidação deve ser feita na conta bancária recebedora.</p></details>
+      <details><summary>Um resultado de baixo risco significa pagamento seguro?</summary><p>Não. Significa apenas que nenhuma inconsistência relevante foi encontrada nas evidências disponíveis. O estado correto é “baixo risco aparente”.</p></details>
+      <details><summary>O que acontece quando existe uma inconsistência?</summary><p>O sistema destaca o dado, explica por que ele merece atenção e orienta uma confirmação adicional antes da entrega.</p></details>
+      <details><summary>Quem deve usar o Verifica Pix?</summary><p>Comerciantes, caixas e responsáveis operacionais que recebem Pix e precisam de um processo comum antes de liberar produtos.</p></details>
+      <details><summary>Como a marca deve falar sobre fraude?</summary><p>Com precisão e sem conclusões absolutas. Use “inconsistência” e “risco aparente”. Evite “fraude confirmada” com base apenas no comprovante.</p></details>
+    </div></div></section>
   </main>
-  ${footer("")}
+  <footer class="landing-footer"><div class="landing-footer-main"><div><img src="assets/logo/verificapix-francy-white.png" alt="Verifica Pix"><p>Uma camada de confiança operacional entre o comprovante e a entrega.</p></div><nav><strong>Produto</strong><a href="#como-funciona">Como funciona</a><a href="#analise">Análise</a><a href="#operacao">Operação</a></nav><nav><strong>Brandbook</strong><a href="guidelines/">Guidelines</a><a href="logo-usage/">Logo</a><a href="voice/">Voz</a></nav><div><strong>Princípio central</strong><p>Confirme sempre a liquidação na conta bancária recebedora.</p></div></div><div class="landing-footer-bottom"><span>© 2026 Verifica Pix</span><span>Brandbook digital e demonstração de produto</span></div></footer>
   <script src="assets/js/brandbook.js"></script>
 </body>
 </html>`;
