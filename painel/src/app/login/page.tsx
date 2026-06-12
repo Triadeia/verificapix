@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
+import Image from "next/image";
 import { getSession } from "@/lib/auth";
 import { LoginForm } from "./login-form";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
 export default async function LoginPage() {
   if (await getSession()) redirect("/app/dashboard");
@@ -10,7 +12,7 @@ export default async function LoginPage() {
       <section className="relative hidden overflow-hidden bg-[var(--navy)] p-14 text-white lg:flex lg:flex-col lg:justify-between">
         <div className="absolute -right-24 top-12 size-96 rounded-full bg-emerald-400/20 blur-3xl" />
         <div className="relative flex items-center gap-3">
-          <div className="grid size-11 place-items-center rounded-2xl bg-emerald-400 font-heading text-xl font-bold text-[var(--navy)]">V</div>
+          <Image src="/brand/verificapix-symbol-white.svg" width={44} height={44} alt="" />
           <div>
             <p className="font-heading text-xl font-bold">Verifica Pix</p>
             <p className="text-xs text-slate-300">Central empresarial</p>
@@ -27,7 +29,8 @@ export default async function LoginPage() {
         </div>
         <p className="relative text-sm text-slate-400">Antes de liberar o produto, verifique o Pix.</p>
       </section>
-      <section className="flex items-center justify-center p-6">
+      <section className="relative flex items-center justify-center p-6">
+        <div className="absolute right-6 top-6"><ThemeSwitcher /></div>
         <div className="glass w-full max-w-md rounded-[2rem] p-8 sm:p-10">
           <p className="text-sm font-bold text-emerald-700">Acesso interno</p>
           <h2 className="mt-2 font-heading text-3xl font-semibold">Bem-vindo de volta</h2>

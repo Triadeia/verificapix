@@ -1,6 +1,8 @@
 import { createHmac, scryptSync, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { employees, type Role } from "@/lib/data";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { createClient as createSupabaseClient } from "@/lib/supabase/server";
 
 const demoPasswordHash =
   "ccfc51319c24567cc2ba7a632dc358972d9b4bef97346be376c4aae654c9650ff0bfd838f0e32902ef49421af8f7519d64737909b0bd7c552151f55e82a2988a";
@@ -48,6 +50,28 @@ export async function deleteSession() {
 }
 
 export async function getSession(): Promise<SessionUser | null> {
+  if (isSupabaseConfigured()) {
+    const supabase = await createSupabaseClient();
+    const { data } = await supabase.auth.getClaims();
+    const userId = data?.claims?.sub;
+    if (!userId) return null;
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("id, full_name, email, role, active")
+      .eq("id", userId)
+      .eq("active", true)
+      .single();
+
+    if (!profile) return null;
+    return {
+      id: profile.id,
+      name: profile.full_name,
+      email: profile.email,
+      role: profile.role as Role,
+    };
+  }
+
   const store = await cookies();
   const value = store.get(cookieName)?.value;
   if (!value) return null;

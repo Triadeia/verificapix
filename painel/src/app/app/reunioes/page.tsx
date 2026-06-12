@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { CalendarPlus, FileAudio, Sparkles, Users } from "lucide-react";
-import { meetings } from "@/lib/data";
+import { getMeetings } from "@/lib/repositories";
 import { Badge, PageHeader } from "@/components/page-parts";
 
-export default function MeetingsPage() {
+export default async function MeetingsPage() {
+  const meetings = await getMeetings();
   return (
     <div>
       <PageHeader
@@ -28,7 +29,7 @@ export default function MeetingsPage() {
         </div>
         {meetings.map((meeting) => (
           <Link key={meeting.id} href={`/app/reunioes/${meeting.id}`} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-slate-100 px-5 py-5 last:border-0 hover:bg-emerald-50/30 sm:grid-cols-[1.5fr_0.7fr_0.7fr_auto]">
-            <div><p className="font-bold">{meeting.title}</p><div className="mt-2 flex gap-2">{meeting.tags.slice(0, 2).map((tag) => <Badge key={tag}>{tag}</Badge>)}</div></div>
+            <div><p className="font-bold">{meeting.title}</p><div className="mt-2 flex gap-2">{meeting.tags.slice(0, 2).map((tag: string) => <Badge key={tag}>{tag}</Badge>)}</div></div>
             <span className="hidden text-sm text-slate-500 sm:block">{meeting.participants.length} pessoas</span>
             <span className="hidden text-sm text-slate-500 sm:block">{meeting.date}</span>
             <Badge tone={meeting.status === "Processada" ? "green" : "amber"}>{meeting.status}</Badge>

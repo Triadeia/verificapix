@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Símbolo Verifica Pix</title>
+  <path d="M68 31H31c-10 0-18 8-18 18v78c0 10 8 18 18 18h62c10 0 18-8 18-18v-13"
+        fill="none" stroke="#3B963A" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m48 83 25 27 67-94"
+        fill="none" stroke="#3B963A" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

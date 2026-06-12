@@ -1,17 +1,18 @@
 import Link from "next/link";
-import { AlertTriangle, ArrowUpRight, BrainCircuit, CalendarDays, CheckCircle2, Clock3, FileText, ListTodo, Target, Users } from "lucide-react";
-import { meetings, projects, tasks } from "@/lib/data";
+import { AlertTriangle, ArrowUpRight, BookOpenText, BrainCircuit, CalendarDays, CheckCircle2, Clock3, FileText, ListTodo, Target, Users } from "lucide-react";
+import { getDashboardData } from "@/lib/repositories";
 import { Badge, MetricCard, PageHeader } from "@/components/page-parts";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const { meetings, projects, tasks } = await getDashboardData();
   const open = tasks.filter((task) => !["Concluída", "Cancelada"].includes(task.status));
   const completed = tasks.filter((task) => task.status === "Concluída");
   const blocked = tasks.filter((task) => task.status === "Bloqueada");
 
   return (
     <div>
-      <PageHeader eyebrow="Visão empresarial" title="Bom trabalho, time." description="O que precisa de atenção agora, com contexto das reuniões e prioridades do MVP." />
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <PageHeader eyebrow="Visão empresarial" title="O que pede decisão agora." description="Prioridades, reuniões e conhecimento reunidos em uma leitura operacional." />
+      <section className="panel grid overflow-hidden sm:grid-cols-2 xl:grid-cols-4 [&>*:not(:last-child)]:border-b [&>*:not(:last-child)]:border-[var(--border)] sm:[&>*:not(:last-child)]:border-r xl:[&>*:not(:last-child)]:border-b-0">
         <MetricCard label="Reuniões cadastradas" value={meetings.length} note="2 processadas pela IA" icon={CalendarDays} />
         <MetricCard label="Tarefas abertas" value={open.length} note="6 de alta prioridade" icon={ListTodo} tone="blue" />
         <MetricCard label="Tarefas críticas" value={blocked.length + 2} note="1 bloqueio ativo" icon={AlertTriangle} tone="red" />
@@ -85,6 +86,17 @@ export default function DashboardPage() {
               })}
             </div>
           </div>
+          <Link href="/app/marca" className="panel panel-interactive block p-5">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-emerald-700">Marca & Design</p>
+                <h2 className="mt-3 font-heading text-xl font-semibold">Brand System 3.0</h2>
+                <p className="muted mt-2 text-sm leading-6">Estratégia, componentes e Caixa Blindado agora vivem dentro do painel.</p>
+              </div>
+              <BookOpenText className="size-5 text-emerald-600" />
+            </div>
+            <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold">Abrir sistema <ArrowUpRight className="size-4" /></span>
+          </Link>
         </div>
       </section>
     </div>

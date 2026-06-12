@@ -2,3 +2,4 @@
 ._*
 .playwright-cli/
 output/playwright/
+.vercel

@@ -2,31 +2,40 @@
 
 import { useMemo, useState } from "react";
 import { Bot, CalendarDays, KanbanSquare, List, Plus, Send, SlidersHorizontal } from "lucide-react";
-import { tasks as initialTasks, type TaskStatus } from "@/lib/data";
+import { type TaskStatus, tasks as fallbackTasks } from "@/lib/data";
 import { Badge } from "@/components/page-parts";
 
 const statuses: TaskStatus[] = ["Backlog", "A Fazer", "Em andamento", "Em revisão", "Bloqueada", "Concluída"];
 
-export function TasksWorkspace() {
+type TaskItem = (typeof fallbackTasks)[number];
+
+export function TasksWorkspace({ initialTasks }: { initialTasks: TaskItem[] }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [view, setView] = useState<"list" | "kanban">("list");
   const [command, setCommand] = useState("");
   const [response, setResponse] = useState("Posso criar, filtrar, resumir e reorganizar tarefas. Ações em lote sempre pedem confirmação.");
   const grouped = useMemo(() => Object.fromEntries(statuses.map((status) => [status, tasks.filter((task) => task.status === status)])), [tasks]);
 
-  function runCommand() {
-    const normalized = command.toLowerCase();
-    if (normalized.includes("atrasad")) {
-      setResponse("Encontrei 3 tarefas que exigem revisão de prazo: painel empresarial, eventos de auditoria e validação de linguagem.");
-    } else if (normalized.startsWith("crie") || normalized.startsWith("criar")) {
-      setTasks((current) => [{ ...current[0], id: `task-local-${Date.now()}`, title: command.replace(/^crie uma tarefa para /i, ""), status: "A Fazer" }, ...current]);
-      setResponse("Tarefa criada localmente em A Fazer. Revise responsável e prazo antes de sincronizar.");
-    } else if (normalized.includes("bloque")) {
-      setResponse("O principal bloqueio do MVP é a definição dos eventos de auditoria, pois afeta integrações e ações da IA.");
-    } else {
-      setResponse("Interpretei o pedido como consulta. No MVP local, experimente: “Liste tarefas atrasadas”, “Crie uma tarefa para João...” ou “Quais tarefas bloqueiam o MVP?”.");
-    }
+  async function runCommand() {
+    if (!command.trim()) return;
+    const submitted = command;
     setCommand("");
+    setResponse("Processando comando...");
+    const response = await fetch("/api/tasks/command", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ command: submitted }),
+    });
+    const result = await response.json();
+    setResponse(response.ok ? result.response : result.error);
+    if (response.ok && result.task) {
+      setTasks((current) => [{
+        ...(current[0] || fallbackTasks[0]),
+        id: result.task.id,
+        title: result.task.title,
+        status: "A Fazer",
+      }, ...current]);
+    }
   }
 
   return (
@@ -35,7 +44,7 @@ export function TasksWorkspace() {
         <div className="flex items-center gap-3 border-b border-white/10 p-5"><div className="grid size-10 place-items-center rounded-xl bg-emerald-400 text-[var(--navy)]"><Bot /></div><div><h2 className="font-heading font-semibold">Chat de Comando</h2><p className="text-xs text-slate-400">Ações locais com confirmação para mudanças em lote</p></div></div>
         <div className="p-5">
           <p className="mb-4 max-w-3xl text-sm leading-6 text-slate-300">{response}</p>
-          <div className="flex gap-2"><input value={command} onChange={(event) => setCommand(event.target.value)} onKeyDown={(event) => event.key === "Enter" && runCommand()} className="h-12 flex-1 rounded-xl border border-white/10 bg-white/10 px-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-400" placeholder="Ex.: Crie uma tarefa para João revisar o dashboard até sexta." /><button onClick={runCommand} className="grid size-12 place-items-center rounded-xl bg-emerald-400 text-[var(--navy)]"><Send className="size-4" /></button></div>
+          <div className="flex gap-2"><input value={command} onChange={(event) => setCommand(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter") void runCommand(); }} className="h-12 flex-1 rounded-xl border border-white/10 bg-white/10 px-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-emerald-400" placeholder="Ex.: Crie uma tarefa para João revisar o dashboard até sexta." /><button onClick={() => void runCommand()} className="grid size-12 place-items-center rounded-xl bg-emerald-400 text-[var(--navy)]"><Send className="size-4" /></button></div>
         </div>
       </section>
       <div className="mb-5 flex flex-wrap items-center gap-2">

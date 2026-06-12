@@ -5,6 +5,7 @@ import { Bot, CheckCircle2, FileUp, ListChecks, Send, Sparkles } from "lucide-re
 import { Badge } from "@/components/page-parts";
 
 type Meeting = {
+  id: string;
   title: string;
   date: string;
   time: string;
@@ -22,7 +23,37 @@ const tabs = ["Visão Geral", "Transcrição", "Resumo Estratégico", "Decisões
 
 export function MeetingWorkspace({ meeting }: { meeting: Meeting }) {
   const [tab, setTab] = useState("Visão Geral");
-  const [processed, setProcessed] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [notice, setNotice] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function saveTranscript() {
+    setLoading(true);
+    setNotice("");
+    const response = await fetch(`/api/meetings/${meeting.id}/transcript`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ content: transcript }),
+    });
+    const result = await response.json();
+    setNotice(response.ok ? "Transcrição salva com segurança." : result.error);
+    setLoading(false);
+  }
+
+  async function processMeeting() {
+    setLoading(true);
+    setNotice("");
+    const response = await fetch(`/api/meetings/${meeting.id}/process`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ title: meeting.title, transcript }),
+    });
+    const result = await response.json();
+    setNotice(response.ok
+      ? "Inteligência gerada, decisões registradas e tarefas propostas."
+      : result.error);
+    setLoading(false);
+  }
 
   return (
     <div>
@@ -33,11 +64,11 @@ export function MeetingWorkspace({ meeting }: { meeting: Meeting }) {
           <p className="mt-2 text-sm text-slate-500">{meeting.date} às {meeting.time} · {meeting.participants.join(", ")}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button onClick={() => setProcessed(true)} className="flex h-10 items-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white"><Sparkles className="size-4" />Gerar inteligência</button>
+          <button disabled={loading} onClick={processMeeting} className="flex h-10 items-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white disabled:opacity-60"><Sparkles className="size-4" />{loading ? "Processando..." : "Gerar inteligência"}</button>
           <button className="flex h-10 items-center gap-2 rounded-xl bg-[var(--navy)] px-4 text-sm font-bold text-white"><ListChecks className="size-4" />Gerar tarefas</button>
         </div>
       </div>
-      {processed ? <div className="mb-5 flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800"><CheckCircle2 className="size-5" />Inteligência atualizada com o adapter local. Nenhum dado foi enviado a terceiros.</div> : null}
+      {notice ? <div className="mb-5 flex items-center gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800"><CheckCircle2 className="size-5" />{notice}</div> : null}
       <div className="mb-6 flex gap-2 overflow-x-auto pb-2">
         {tabs.map((item) => <button key={item} onClick={() => setTab(item)} className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-bold ${tab === item ? "bg-[var(--navy)] text-white" : "border border-[var(--border)] bg-white text-slate-600"}`}>{item}</button>)}
       </div>
@@ -58,7 +89,7 @@ export function MeetingWorkspace({ meeting }: { meeting: Meeting }) {
 
       {tab === "Transcrição" ? (
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="panel p-6"><h2 className="font-heading text-xl font-semibold">Adicionar transcrição</h2><p className="mt-2 text-sm text-slate-500">Cole o conteúdo ou envie um arquivo de até 20 MB.</p><textarea className="mt-5 min-h-72 w-full rounded-2xl border border-[var(--border)] p-4 text-sm outline-none focus:border-emerald-400" placeholder="Cole a transcrição completa aqui..." /><button className="mt-4 flex items-center gap-2 rounded-xl bg-[var(--navy)] px-4 py-2.5 text-sm font-bold text-white"><FileUp className="size-4" />Enviar arquivo</button></div>
+          <div className="panel p-6"><h2 className="font-heading text-xl font-semibold">Adicionar transcrição</h2><p className="mt-2 text-sm text-slate-500">Cole o conteúdo ou envie um arquivo de até 20 MB.</p><textarea value={transcript} onChange={(event) => setTranscript(event.target.value)} className="mt-5 min-h-72 w-full rounded-2xl border border-[var(--border)] p-4 text-sm outline-none focus:border-emerald-400" placeholder="Cole a transcrição completa aqui..." /><button disabled={loading} onClick={saveTranscript} className="mt-4 flex items-center gap-2 rounded-xl bg-[var(--navy)] px-4 py-2.5 text-sm font-bold text-white disabled:opacity-60"><FileUp className="size-4" />Salvar transcrição</button></div>
           <div className="panel p-6"><h2 className="font-heading text-xl font-semibold">Importar por link</h2><p className="mt-2 text-sm text-slate-500">Google Docs, Drive ou arquivo público. Links privados exigem OAuth.</p><input className="mt-5 h-12 w-full rounded-xl border border-[var(--border)] px-4 text-sm outline-none focus:border-emerald-400" placeholder="https://docs.google.com/..." /><button className="mt-4 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-bold text-white">Tentar importar</button></div>
         </div>
       ) : null}
