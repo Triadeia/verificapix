@@ -2,13 +2,26 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
 import { BrandSpecimens } from "@/components/brandbook-specimens";
-import { brandSections, getBrandSection } from "@/lib/brandbook";
+import { MovementDocuments } from "@/components/movement-documents";
+import { brandSections, getBrandSection, MOVEMENT_DOCUMENTS_ANCHOR } from "@/lib/brandbook";
+import { listMovementDocuments } from "@/lib/movement-documents.server";
 
 export function generateStaticParams() {
   return brandSections.map((section) => ({ slug: section.slug }));
 }
 
-export default async function BrandSectionPage({ params }: { params: Promise<{ slug: string }> }) {
+async function MovementDocumentsServer() {
+  const { items, total } = await listMovementDocuments();
+  return <MovementDocuments initialItems={items} total={total} />;
+}
+
+export default async function BrandSectionPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<Record<string, string>>;
+}) {
   const { slug } = await params;
   const section = getBrandSection(slug);
   if (!section) notFound();
@@ -57,6 +70,10 @@ export default async function BrandSectionPage({ params }: { params: Promise<{ s
             </section>
           ))}
 
+          {section.slug === "movimento" && MOVEMENT_DOCUMENTS_ANCHOR ? (
+            <MovementDocumentsServer />
+          ) : null}
+
           <BrandSpecimens slug={section.slug} />
 
           {section.slug === "movimento" ? (
@@ -82,7 +99,12 @@ export default async function BrandSectionPage({ params }: { params: Promise<{ s
           <p className="brand-index-number mb-3">Nesta página</p>
           {section.chapters.map((chapter) => <a key={chapter.id} href={`#${chapter.id}`}>{chapter.title}</a>)}
           {["cores", "tipografia", "layout", "componentes", "tabelas"].includes(section.slug) ? <a href="#especimes">Espécimes</a> : null}
-          {section.slug === "movimento" ? <a href="#manifesto">Manifesto</a> : null}
+          {section.slug === "movimento" ? (
+            <>
+              <a href={`#${MOVEMENT_DOCUMENTS_ANCHOR}`}>Documentos</a>
+              <a href="#manifesto">Manifesto</a>
+            </>
+          ) : null}
         </aside>
       </div>
 

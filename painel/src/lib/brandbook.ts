@@ -245,6 +245,25 @@ export const brandSections: BrandSection[] = [
         title: "Força sem irresponsabilidade",
         lead: "Não expor vítimas, ensinar técnicas de golpe, atacar funcionários, usar nacionalidade como insulto ou prometer eliminação absoluta de fraude.",
       },
+      {
+        id: "documentos",
+        title: "Receita Certa de quem constrói",
+        lead: "Os Documentos do Movimento são registros vivos: casos resolvidos, roteiros que funcionaram, evidências de território. Quem constrói deixa o passo a passo para quem chega depois.",
+        points: [
+          {
+            title: "Território",
+            text: "Toda receita aponta onde foi testada. Bairro, cidade e contexto evitam generalização.",
+          },
+          {
+            title: "Resultado",
+            text: "Sem prova documentada, é hipótese. A coluna 'fonte' obriga a citar quem viveu.",
+          },
+          {
+            title: "Compartilhar",
+            text: "Publicar é o rito. O barulho dos bons só existe quando a receita sai da gaveta.",
+          },
+        ],
+      },
     ],
   },
   {
@@ -293,6 +312,8 @@ export const assetDirectory = [
   { id: "asset-logo", name: "Assinatura Francy", category: "Asset", group: "Marca", description: "Assinatura principal em fundos claros.", href: "/brand/verificapix-francy.png" },
   { id: "asset-logo-white", name: "Assinatura reversa", category: "Asset", group: "Marca", description: "Assinatura branca para fundos escuros.", href: "/brand/verificapix-francy-white.png" },
 ];
+
+export const MOVEMENT_DOCUMENTS_ANCHOR = "documentos";
 
 export function getBrandSection(slug: string) {
   return brandSections.find((section) => section.slug === slug);

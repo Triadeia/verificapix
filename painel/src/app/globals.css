@@ -769,3 +769,157 @@ html:not([data-theme="light"]) select {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* === Movimento / Documentos === */
+:root {
+  --movement-doc-bg: #fdfbf7;
+  --movement-doc-card: #ffffff;
+  --movement-doc-border: rgba(15, 23, 42, 0.08);
+  --movement-doc-border-strong: rgba(15, 23, 42, 0.16);
+  --movement-doc-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+  --movement-doc-shadow-hover: 0 4px 12px rgba(15, 23, 42, 0.08), 0 16px 32px rgba(15, 23, 42, 0.1);
+  --movement-doc-accent: #c2410c;
+  --movement-doc-accent-soft: #fff7ed;
+  --movement-status-draft-bg: #f1f5f9;
+  --movement-status-draft-fg: #475569;
+  --movement-status-review-bg: #fef3c7;
+  --movement-status-review-fg: #92400e;
+  --movement-status-published-bg: #d1fae5;
+  --movement-status-published-fg: #065f46;
+  --movement-status-archived-bg: #f8fafc;
+  --movement-status-archived-fg: #94a3b8;
+}
+
+.movement-documents {
+  background: var(--movement-doc-bg);
+  border-radius: 24px;
+  padding: 32px 24px;
+  margin-top: 48px;
+}
+
+.movement-documents h2 {
+  font-family: var(--font-sora, system-ui);
+  font-weight: 800;
+  font-size: 1.75rem;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+}
+
+.movement-documents-toolbar {
+  border-top: 1px solid var(--movement-doc-border);
+  padding-top: 16px;
+}
+
+.movement-documents-toolbar input,
+.movement-documents-toolbar select {
+  background: var(--movement-doc-card);
+  border: 1px solid var(--movement-doc-border);
+  color: var(--navy);
+  transition: border-color 160ms ease;
+}
+
+.movement-documents-toolbar input:focus,
+.movement-documents-toolbar select:focus {
+  outline: none;
+  border-color: var(--movement-doc-border-strong);
+  box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.08);
+}
+
+.movement-documents-grid > li {
+  background: var(--movement-doc-card);
+  border: 1px solid var(--movement-doc-border);
+  box-shadow: var(--movement-doc-shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.movement-documents-grid > li:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--movement-doc-shadow-hover);
+}
+
+.movement-documents-grid h3 {
+  font-family: var(--font-sora, system-ui);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--navy);
+}
+
+.movement-documents-grid dt {
+  font-family: var(--font-jakarta, system-ui);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.movement-doc-kind {
+  color: var(--movement-doc-accent);
+  background: var(--movement-doc-accent-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.movement-doc-status {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.movement-doc-status[data-status="Rascunho"] {
+  background: var(--movement-status-draft-bg);
+  color: var(--movement-status-draft-fg);
+}
+
+.movement-doc-status[data-status="Em revisão"] {
+  background: var(--movement-status-review-bg);
+  color: var(--movement-status-review-fg);
+}
+
+.movement-doc-status[data-status="Publicado"] {
+  background: var(--movement-status-published-bg);
+  color: var(--movement-status-published-fg);
+}
+
+.movement-doc-status[data-status="Arquivado"] {
+  background: var(--movement-status-archived-bg);
+  color: var(--movement-status-archived-fg);
+  opacity: 0.7;
+}
+
+.movement-doc-dialog {
+  background: var(--movement-doc-card);
+  border: 1px solid var(--movement-doc-border);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+}
+
+.movement-doc-dialog h3 {
+  font-family: var(--font-sora, system-ui);
+  font-weight: 800;
+  color: var(--navy);
+}
+
+/* Modo escuro institucional */
+[data-theme="dark"] .movement-documents {
+  --movement-doc-bg: #0f1623;
+  --movement-doc-card: #131c2d;
+  --movement-doc-border: rgba(255, 255, 255, 0.08);
+  --movement-doc-border-strong: rgba(255, 255, 255, 0.18);
+  --movement-doc-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --movement-doc-accent: #fb923c;
+  --movement-doc-accent-soft: rgba(251, 146, 60, 0.12);
+  --movement-status-draft-bg: rgba(148, 163, 184, 0.16);
+  --movement-status-draft-fg: #cbd5e1;
+  --movement-status-review-bg: rgba(251, 191, 36, 0.16);
+  --movement-status-review-fg: #fcd34d;
+  --movement-status-published-bg: rgba(34, 197, 94, 0.16);
+  --movement-status-published-fg: #86efac;
+}
+
+[data-theme="dark"] .movement-documents h2,
+[data-theme="dark"] .movement-documents-grid h3 {
+  color: #f8fafc;
+}
