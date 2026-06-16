@@ -194,73 +194,84 @@ export const brandSections: BrandSection[] = [
   {
     slug: "movimento",
     group: "Marca",
-    title: "Caixa Blindado.",
+    title: "A Receita Certa para a Bahia.",
     shortTitle: "Movimento",
-    description: "Causa, doutrinas, ritos, símbolos e guardrails do movimento.",
+    description: "Dr. Pitágoras. Narrativa, método, doutrinas e testemunhos do movimento.",
     icon: Megaphone,
     chapters: [
       {
+        id: "headline",
+        title: "Dr. Pitágoras. A Receita Certa para a Bahia.",
+        lead: "A Bahia é de quem constrói o interior. Quem cuidou de Candeias, vai cuidar da Bahia. Não é promessa — é método que já provou resultado.",
+      },
+      {
+        id: "pilares",
+        title: "Receita Certa de quem constrói",
+        lead: "Cinco pilares estruturam a ação: Educação, Segurança, Saúde, Emprego e Desenvolvimento. Cada um é um compromisso testado em Candeias, pronto para expandir.",
+        points: [
+          { title: "Educação", text: "Escola que funciona, professor que fica, criança que aprende de verdade." },
+          { title: "Segurança", text: "Rua segura, negócio viável, comunidade que respira." },
+          { title: "Saúde", text: "Médico de verdade cuida do povo de verdade. Não é ideologia — é cuidado." },
+          { title: "Emprego", text: "Quem trabalha sustenta família. Oportunidade vem de quem constrói." },
+          { title: "Desenvolvimento", text: "Interior merece o mesmo acesso que capital. Inovação chega onde há liderança." },
+        ],
+      },
+      {
+        id: "metodo",
+        title: "O Método Receita Certa",
+        lead: "Não é palavra de campanha. É sistema que funciona: Escuta Ativa (ouve a população) → Gestão Integrada (eficiência nas pessoas certas) → Ações Assertivas (ataca raiz, não sintoma).",
+        points: [
+          { title: "Escuta Ativa", text: "Saber ouvir é saber entender de verdade. Sem escuta, não há receita." },
+          { title: "Gestão Integrada", text: "Colocar gente capaz nos lugares certos. Eficiência começa com as pessoas." },
+          { title: "Ações Assertivas", text: "Cada ação resolve necessidade identificada. Sem desperdício, sem promessas vazias." },
+        ],
+      },
+      {
+        id: "prova",
+        title: "8 anos. 84%. Candeias mudou.",
+        lead: "Não é estatística de campanha. São 8 anos de gestão real, 84% de aprovação (Datafolha 2024), e uma cidade que virou símbolo de que é possível quando tem método.",
+      },
+      {
         id: "ideal",
-        title: "O Brasil é de quem faz o bem.",
-        lead: "Proteger o pequeno comércio é proteger famílias, empregos e bairros. A causa transforma verificação em cuidado ativo, não em desconfiança.",
-      },
-      {
-        id: "tese",
-        title: "Blindagem vence lamentação",
-        lead: "O movimento combate a normalização do prejuízo. O empresário não precisa sofrer calado nem responsabilizar sozinho quem opera o caixa.",
-        points: [
-          { title: "Herói", text: "Quem trabalha, produz e sustenta a economia real." },
-          { title: "Tensão", text: "Velocidade do Pix contra a pressa usada para explorar a decisão no balcão." },
-          { title: "Virada", text: "Verificar não é desconfiar. É cuidar do negócio e do time." },
-        ],
-      },
-      {
-        id: "protetores",
-        title: "Os Protetores",
-        lead: "Empresários e equipes que instalam um processo simples, compartilham aprendizado e ajudam outros comércios a reduzir exposição.",
-        points: [
-          { title: "Proteção", text: "Quem constrói, protege." },
-          { title: "Dignidade", text: "Ser honesto não significa decidir sem evidência." },
-          { title: "União", text: "O barulho dos bons transforma experiência em prevenção coletiva." },
-          { title: "Clareza", text: "Comprovante é evidência. Liquidação se confirma na conta recebedora." },
-        ],
+        title: "De uma nova Candeias para uma nova Bahia",
+        lead: "O interior não pede esmola. Pede representação real. Deputado que já sabe cuidar, que já entrega resultado, que já provou método.",
       },
       {
         id: "ritos",
         title: "Ritos que tornam a causa visível",
-        lead: "Abrir o Escudo é adotar o processo. Fechar a Janela é verificar antes da entrega. Barulho dos Bons é compartilhar o aprendizado com outro comerciante.",
+        lead: "Conhecer o povo é o primeiro rito. Trazer solução testada é o segundo. Documentar resultado é o terceiro — porque quem constrói deixa receita.",
       },
       {
         id: "simbolos",
-        title: "Escudo, balcão e janela",
-        lead: "O escudo representa proteção ativa. O balcão é a linha de frente. A janela é o momento entre a imagem apresentada e a confirmação necessária.",
+        title: "Candeias como símbolo",
+        lead: "Não é homenagem — é prova. UTI que não existia agora existe. Escola que caía agora funciona. Segurança que parecia impossível agora é realidade.",
       },
       {
         id: "flywheel",
         title: "Conhecer, confiar, adotar, propagar",
-        lead: "Histórias reais apresentam o problema. Demonstrações explicam o processo. A adoção cria rotina. Resultados documentados, com consentimento, alimentam a comunidade.",
+        lead: "Histórias reais de Candeias apresentam a prova. Método explicado de forma clara para todos entenderem. Adoção em novos territórios gera novo resultado. Documentação alimenta confiança coletiva.",
       },
       {
         id: "guardrails",
         title: "Força sem irresponsabilidade",
-        lead: "Não expor vítimas, ensinar técnicas de golpe, atacar funcionários, usar nacionalidade como insulto ou prometer eliminação absoluta de fraude.",
+        lead: "Sem ataque pessoal. Sem mentira sobre números. Sem promessas impossíveis. Crítica é ao método errado, nunca à pessoa. Transparência radical: tudo que foi feito, pode ser auditado.",
       },
       {
         id: "documentos",
-        title: "Receita Certa de quem constrói",
-        lead: "Os Documentos do Movimento são registros vivos: casos resolvidos, roteiros que funcionaram, evidências de território. Quem constrói deixa o passo a passo para quem chega depois.",
+        title: "Documentos do Movimento",
+        lead: "As 10 Doutrinas Centrais estruturam toda narrativa: da identidade ao voto. Cada uma é um andar do edifício. Cada um clicável, cada um com história, cada um comprovável.",
         points: [
           {
+            title: "DOC-001 a DOC-010",
+            text: "Narrativa profunda que fundamenta copy, vídeos e conversas. Doutrinas vivas — que crescem com evidência, não que morrem com eleição.",
+          },
+          {
             title: "Território",
-            text: "Toda receita aponta onde foi testada. Bairro, cidade e contexto evitam generalização.",
+            text: "Toda ação aponta o bairro, a escola, o hospital. Contexto evita generalização e prova rastreabilidade.",
           },
           {
-            title: "Resultado",
-            text: "Sem prova documentada, é hipótese. A coluna 'fonte' obriga a citar quem viveu.",
-          },
-          {
-            title: "Compartilhar",
-            text: "Publicar é o rito. O barulho dos bons só existe quando a receita sai da gaveta.",
+            title: "Compartilhamento",
+            text: "Publicar é o rito. Quem constrói deixa a receita. Quem chegar depois continua de onde parou.",
           },
         ],
       },

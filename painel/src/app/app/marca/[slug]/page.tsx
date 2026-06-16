@@ -3,8 +3,11 @@ import { ArrowLeft, ArrowRight, ShieldAlert } from "lucide-react";
 import { notFound } from "next/navigation";
 import { BrandSpecimens } from "@/components/brandbook-specimens";
 import { MovementDocuments } from "@/components/movement-documents";
+import { MovementPillarsCarousel } from "@/components/movement-pillars-carousel";
+import { MovementDoctrines } from "@/components/movement-doctrines";
 import { brandSections, getBrandSection, MOVEMENT_DOCUMENTS_ANCHOR } from "@/lib/brandbook";
 import { listMovementDocuments } from "@/lib/movement-documents.server";
+import { MOVEMENT_METHOD } from "@/lib/movement-pillars";
 
 export function generateStaticParams() {
   return brandSections.map((section) => ({ slug: section.slug }));
@@ -43,10 +46,46 @@ export default async function BrandSectionPage({
       <div className="brand-content mt-8">
         <div className="brand-reading">
           {section.slug === "movimento" ? (
-            <section className="movement-manifesto">
-              <blockquote>AGORA O CAIXA É BLINDADO.</blockquote>
-              <p className="mt-6 max-w-2xl leading-7">Não é uma promessa de risco zero. É um compromisso de instalar um processo claro antes que o produto deixe o balcão.</p>
-            </section>
+            <>
+              <section className="movement-manifesto mb-12">
+                <blockquote className="text-4xl font-bold">
+                  A Receita Certa para a Bahia.
+                </blockquote>
+                <p className="mt-6 max-w-2xl leading-7 text-lg">
+                  Dr. Pitágoras. Quem cuidou de Candeias, vai cuidar da Bahia.
+                  Não é promessa — é método que já provou resultado.
+                </p>
+              </section>
+
+              {/* Pillars Carousel */}
+              <section className="my-12">
+                <h3 className="text-2xl font-bold mb-6">Os Cinco Pilares</h3>
+                <MovementPillarsCarousel />
+              </section>
+
+              {/* Method Section */}
+              <section className="my-12">
+                <h3 className="text-2xl font-bold mb-6">O Método Receita Certa</h3>
+                <div className="grid gap-6 sm:grid-cols-3">
+                  {MOVEMENT_METHOD.steps.map((step, index) => (
+                    <div
+                      key={step.id}
+                      className="relative rounded-lg border border-slate-200 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900"
+                    >
+                      <div className="absolute -left-3 -top-3 flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white font-bold text-sm">
+                        {index + 1}
+                      </div>
+                      <h4 className="mt-2 text-lg font-bold text-slate-900 dark:text-white">
+                        {step.name}
+                      </h4>
+                      <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
+                        {step.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </>
           ) : null}
 
           {section.chapters.map((chapter, index) => (
@@ -70,8 +109,16 @@ export default async function BrandSectionPage({
             </section>
           ))}
 
-          {section.slug === "movimento" && MOVEMENT_DOCUMENTS_ANCHOR ? (
-            <MovementDocumentsServer />
+          {section.slug === "movimento" ? (
+            <>
+              {/* Doctrines Section */}
+              <section className="my-12" id="doutrinas">
+                <MovementDoctrines />
+              </section>
+
+              {/* Movement Documents */}
+              {MOVEMENT_DOCUMENTS_ANCHOR && <MovementDocumentsServer />}
+            </>
           ) : null}
 
           <BrandSpecimens slug={section.slug} />
@@ -82,14 +129,15 @@ export default async function BrandSectionPage({
                 <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-600" />
                 <div>
                   <h3>Guardrail editorial</h3>
-                  <p className="mt-2 text-sm">A causa pode ser firme sem desumanizar pessoas. Nacionalidade nunca é usada como insulto. Resultados, preços, tempos e depoimentos só entram após validação documental.</p>
+                  <p className="mt-2 text-sm">Sem ataque pessoal — sempre crítica ao método errado, nunca à pessoa. Sem mentira sobre números. Sem promessas impossíveis. Transparência radical: tudo pode ser auditado. Dados sempre com rosto, obra ou evidência.</p>
                 </div>
               </div>
               <div className="movement-manifesto mt-8">
-                <blockquote>Verificar não é desconfiar. É cuidar.</blockquote>
-                <p className="mt-6 leading-7">Quem trabalha merece decidir com evidência. Quem atende merece um processo claro. Quem constrói o negócio merece enxergar o caixa mesmo quando está longe.</p>
-                <p className="mt-4 leading-7">O comprovante inicia a análise. A confirmação termina na conta recebedora. Entre os dois, existe uma escolha: improvisar ou fechar a janela.</p>
-                <p className="mt-4 font-bold text-emerald-300">Antes de liberar, verifique. Depois de aprender, compartilhe. O barulho dos bons protege mais um balcão.</p>
+                <blockquote>De uma nova Candeias para uma nova Bahia.</blockquote>
+                <p className="mt-6 leading-7">A Bahia é de quem constrói o interior. Método é receita — diagnóstico, plano, execução, resultado. Não é promessa — é passo a passo documentado.</p>
+                <p className="mt-4 leading-7">Quem cuidou de Candeias vai cuidar da Bahia. Não é elevação de cargo — é transferência comprovada de competência. 8 anos. 84%. Candeias mudou.</p>
+                <p className="mt-4 leading-7">O interior não pede esmola. Pede representação real. Quem constrói deixa receita. Quem chega depois continua de onde parou.</p>
+                <p className="mt-4 font-bold text-blue-600 dark:text-blue-400">Receita Certa de quem constrói. O voto certo é o voto que tem receita por trás.</p>
               </div>
             </section>
           ) : null}
@@ -101,7 +149,8 @@ export default async function BrandSectionPage({
           {["cores", "tipografia", "layout", "componentes", "tabelas"].includes(section.slug) ? <a href="#especimes">Espécimes</a> : null}
           {section.slug === "movimento" ? (
             <>
-              <a href={`#${MOVEMENT_DOCUMENTS_ANCHOR}`}>Documentos</a>
+              <a href="#doutrinas">As 10 Doutrinas</a>
+              <a href={`#${MOVEMENT_DOCUMENTS_ANCHOR}`}>Documentos do Movimento</a>
               <a href="#manifesto">Manifesto</a>
             </>
           ) : null}
